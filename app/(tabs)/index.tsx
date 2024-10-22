@@ -1,41 +1,27 @@
-import { Button, StyleSheet } from "react-native";
+import { StyleSheet, ScrollView } from "react-native";
 
-import EditScreenInfo from "@/components/EditScreenInfo";
-import { Text, View } from "@/components/Themed";
-
-import { useAuth } from "@/contexts/AuthContext";
+import { View } from "@/components/Themed";
+import WelcomeBanner from "@/components/WelcomeBanner";
+import EventsNearYou from "@/components/EventsNearYou";
 
 export default function TabOneScreen() {
-  const { user, session, signOut } = useAuth();
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>
-        {session ? user?.email : "No user signed in"}
-      </Text>
-      <Button title="Sign out" onPress={() => signOut()} />
-      <View
-        style={styles.separator}
-        lightColor="#eee"
-        darkColor="rgba(255,255,255,0.1)"
-      />
-      <EditScreenInfo path="app/(tabs)/index.tsx" />
-    </View>
+    <ScrollView contentContainerStyle={styles.scrollContainer}>
+      <View style={styles.container}>
+        <WelcomeBanner />
+        <EventsNearYou />
+      </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
+  scrollContainer: {
+    flexGrow: 1,
+  },
   container: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "center",
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
+    justifyContent: "flex-start",
   },
 });

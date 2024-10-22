@@ -25,7 +25,7 @@ export default function TabLayout() {
           headerShown: useClientOnlyValue(false, false),
           tabBarStyle: {
             position: "absolute",
-            bottom: 30,
+            bottom: Colors["light"].bottomNavigationElevation,
             left: 20,
             right: 20,
             backgroundColor: Colors["light"].tabBarColor,
@@ -47,14 +47,16 @@ export default function TabLayout() {
           name="index"
           options={{
             title: "Welcome",
-            tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
+            tabBarIcon: ({ color }) => <TabBarIcon name="feed" color={color} />,
           }}
         />
         <Tabs.Screen
           name="explore"
           options={{
             title: "Explore",
-            tabBarIcon: ({ color }) => <TabBarIcon name="map" color={color} />,
+            tabBarIcon: ({ color }) => (
+              <TabBarIcon name="search" color={color} />
+            ),
           }}
         />
         <Tabs.Screen
@@ -63,7 +65,7 @@ export default function TabLayout() {
             title: "Create",
             tabBarIcon: () => (
               <View style={styles.createIconContainer}>
-                <TabBarIcon name="plus" color={Colors["light"].tabBarColor} />
+                <TabBarIcon name="magic" color={Colors["light"].tabBarColor} />
               </View>
             ),
           }}
@@ -81,7 +83,7 @@ export default function TabLayout() {
           name="settings"
           options={{
             title: "Settings",
-            tabBarIcon: ({ color }) => <TabBarIcon name="cog" color={color} />,
+            tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color} />,
           }}
         />
       </Tabs>
@@ -105,7 +107,7 @@ const styles = StyleSheet.create({
   },
   createIconContainer: {
     backgroundColor: Colors["light"].tabIconSelected,
-    borderRadius: 25,
+    borderRadius: Colors["light"].borderRadius,
     width: 50,
     height: 50,
     alignItems: "center",
