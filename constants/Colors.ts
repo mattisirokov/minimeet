@@ -1,19 +1,14 @@
-const tintColorLight = '#2f95dc';
-const tintColorDark = '#fff';
+const tintColorLight = "#E58666";
+const borderRadius = 15;
 
 export default {
   light: {
-    text: '#000',
-    background: '#fff',
+    text: "#1E1C1A",
+    background: "#fff",
     tint: tintColorLight,
-    tabIconDefault: '#ccc',
+    tabIconDefault: "#ccc",
+    tabBarColor: "white",
     tabIconSelected: tintColorLight,
-  },
-  dark: {
-    text: '#fff',
-    background: '#000',
-    tint: tintColorDark,
-    tabIconDefault: '#ccc',
-    tabIconSelected: tintColorDark,
+    borderRadius,
   },
 };
