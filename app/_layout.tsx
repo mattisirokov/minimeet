@@ -1,4 +1,6 @@
 import { useEffect } from "react";
+import { ScrollView, View, Text, StyleSheet } from "react-native";
+
 import { Stack } from "expo-router";
 
 import "react-native-reanimated";

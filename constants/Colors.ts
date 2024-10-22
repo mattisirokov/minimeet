@@ -1,6 +1,7 @@
 const tintColorLight = "#E71D36";
 const borderRadius = 15;
 const bottomNavigationElevation = 30;
+const bottomNavigationHeight = 60;
 
 export default {
   light: {
@@ -12,5 +13,6 @@ export default {
     tabIconSelected: tintColorLight,
     borderRadius,
     bottomNavigationElevation,
+    bottomNavigationHeight,
   },
 };

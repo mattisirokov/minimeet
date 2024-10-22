@@ -1,9 +1,9 @@
 import React from "react";
-import { View, Text, StyleSheet, Image, TextInput } from "react-native";
+import { StyleSheet, Image, TextInput } from "react-native";
+import { View, Text } from "./Themed";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 import Colors from "@/constants/Colors";
-import FilterItem from "./FilterItem";
 import FilterCarousel from "./FilterCarousel";
 
 const Header = () => {
@@ -19,7 +19,7 @@ const Header = () => {
         <Text style={styles.welcomeText}>Welcome Matti!</Text>
       </View>
 
-      <Text style={styles.title}>Find Amazing Events Near You</Text>
+      <Text style={styles.title}>Find Mini Meets Near You</Text>
 
       <Text style={styles.subtext}>258 events near Helsinki</Text>
 

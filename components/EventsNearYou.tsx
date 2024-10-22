@@ -1,8 +1,15 @@
-import { View, Text, StyleSheet, Dimensions, Button } from "react-native";
-import React from "react";
-import EventCard from "./EventCard";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Dimensions,
+  TouchableOpacity,
+} from "react-native";
+
 import Carousel from "react-native-reanimated-carousel";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+
+import EventCard from "./EventCard";
 
 const events = [
   {
@@ -45,8 +52,10 @@ const EventsNearYou = () => {
   return (
     <View style={styles.componentWrapper}>
       <View style={styles.headerContainer}>
-        <Text style={styles.header}>Events nearby</Text>
-        <Button title="See all" />
+        <Text style={styles.header}>Upcoming events</Text>
+        <TouchableOpacity>
+          <Text>See all</Text>
+        </TouchableOpacity>
       </View>
       <Carousel
         loop
@@ -78,20 +87,19 @@ const EventsNearYou = () => {
 const styles = StyleSheet.create({
   componentWrapper: {
     width: "100%",
-    padding: 20,
+    paddingTop: 15,
+    paddingBottom: 15,
+    paddingLeft: 20,
+    paddingRight: 20,
   },
   header: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: "bold",
   },
   headerContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-  },
-  cardWrapper: {
-    width: width * 0.85, // Adjusted width to allow next item to peek
-    paddingHorizontal: 10,
   },
 });
 

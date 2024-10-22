@@ -30,7 +30,7 @@ export default function TabLayout() {
             right: 20,
             backgroundColor: Colors["light"].tabBarColor,
             borderRadius: Colors["light"].borderRadius,
-            height: 60,
+            height: Colors["light"].bottomNavigationHeight,
             ...styles.shadow,
           },
           tabBarItemStyle: {
