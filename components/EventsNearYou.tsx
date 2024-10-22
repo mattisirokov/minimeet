@@ -9,7 +9,7 @@ const events = [
     id: 1,
     title: "Making pizza with Italians",
     image: "https://picsum.photos/200/300",
-    icon: "pizza",
+    icon: "cutlery",
     category: "Food",
     city: "Paris",
   },
@@ -17,7 +17,7 @@ const events = [
     id: 2,
     title: "Beer tasting with Germans",
     image: "https://picsum.photos/200/300",
-    icon: "beer",
+    icon: "cutlery",
     category: "Drinks",
     city: "Berlin",
   },
@@ -57,16 +57,14 @@ const EventsNearYou = () => {
         data={events}
         mode="parallax"
         renderItem={({ item }) => (
-          <View style={styles.cardWrapper}>
-            <EventCard
-              key={item.id}
-              title={item.title}
-              image={item.image}
-              category="Food"
-              city="Paris"
-              icon="cutlery"
-            />
-          </View>
+          <EventCard
+            key={item.id}
+            title={item.title}
+            image={item.image}
+            category={item.category}
+            city={item.city}
+            icon={item.icon as keyof typeof FontAwesome.glyphMap}
+          />
         )}
         panGestureHandlerProps={{
           activeOffsetX: [-10, 10],
@@ -92,7 +90,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   cardWrapper: {
-    width: width - 20,
+    width: width * 0.85, // Adjusted width to allow next item to peek
     paddingHorizontal: 10,
   },
 });
