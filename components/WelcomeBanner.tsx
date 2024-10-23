@@ -16,7 +16,7 @@ const Header = () => {
           }}
           style={styles.profileImage}
         />
-        <Text style={styles.welcomeText}>Welcome Matti!</Text>
+        <Text style={styles.welcomeText}>Welcome Matti Sirokov!</Text>
       </View>
 
       <Text style={styles.title}>Find Mini Meets Near You</Text>

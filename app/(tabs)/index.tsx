@@ -1,6 +1,5 @@
 import { StyleSheet, ScrollView } from "react-native";
 
-import { View } from "@/components/Themed";
 import WelcomeBanner from "@/components/WelcomeBanner";
 import EventsNearYou from "@/components/EventsNearYou";
 import TopCreators from "@/components/TopCreators";
@@ -11,8 +10,8 @@ export default function TabOneScreen() {
     <ScrollView>
       <WelcomeBanner />
       <EventsNearYou />
-      <FeaturedCategories />
       <TopCreators />
+      <FeaturedCategories />
     </ScrollView>
   );
 }

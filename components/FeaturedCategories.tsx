@@ -1,19 +1,11 @@
 import React from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { View, Text } from "./Themed";
-import FontAwesome from "@expo/vector-icons/FontAwesome";
-import Colors from "@/constants/Colors";
 
-const featuredCategories = [
-  { name: "Music", color: "#FF6363", icon: "music" },
-  { name: "Food", color: "#FF9F43", icon: "cutlery" },
-  { name: "Art", color: "#6C5CE7", icon: "paint-brush" },
-  { name: "Sports", color: "#45AAF2", icon: "futbol-o" },
-  { name: "Fashion", color: "#EC3B83", icon: "shopping-bag" },
-  { name: "Beauty", color: "#FFA8A8", icon: "magic" },
-  { name: "Cars", color: "#2ECC71", icon: "car" },
-  { name: "Watches", color: "#2ECC71", icon: "clock-o" },
-];
+import FontAwesome from "@expo/vector-icons/FontAwesome";
+
+import { featuredCategories } from "@/placeholder-data/placeholder-categories";
+import Colors from "@/constants/Colors";
 
 const FeaturedCategories = () => {
   return (
@@ -46,6 +38,7 @@ const styles = StyleSheet.create({
 
     paddingLeft: 20,
     paddingRight: 20,
+    paddingBottom: Colors["light"].bottomNavigationHeight + 30,
   },
   header: {
     fontSize: 20,
@@ -65,6 +58,7 @@ const styles = StyleSheet.create({
   categoryIcon: {
     width: 50,
     height: 50,
+    opacity: 0.75,
     borderRadius: 25,
     justifyContent: "center",
     alignItems: "center",

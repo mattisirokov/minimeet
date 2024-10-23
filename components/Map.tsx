@@ -1,11 +1,18 @@
+import { lightBlueMapStyle } from "@/config/mapStyles";
 import { StyleSheet, View } from "react-native";
-import MapView from "react-native-maps";
+import MapView, { Marker } from "react-native-maps";
 
-const INITIAL_REGION = {
+import CustomMarker from "./map/CustomMarker";
+
+import { events } from "@/placeholder-data/placeholder-events";
+
+// This has been hardcoded to Helsinki, Finland
+
+const INITIAL_POSITION = {
   latitude: 60.1699,
   longitude: 24.9384,
-  latitudeDelta: 2,
-  longitudeDelta: 2,
+  latitudeDelta: 0.06,
+  longitudeDelta: 0.06,
 };
 
 export default function Map() {
@@ -13,11 +20,15 @@ export default function Map() {
     <View style={styles.container}>
       <MapView
         style={styles.map}
-        showsUserLocation
-        showsMyLocationButton
-        initialRegion={INITIAL_REGION}
-        zoomEnabled
-      />
+        initialRegion={INITIAL_POSITION}
+        customMapStyle={lightBlueMapStyle}
+      >
+        {events.map((event) => (
+          <Marker key={event.id} coordinate={event.coordinates}>
+            <CustomMarker event={event} />
+          </Marker>
+        ))}
+      </MapView>
     </View>
   );
 }

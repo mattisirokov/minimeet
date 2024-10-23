@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { ScrollView, View, Text, StyleSheet } from "react-native";
 
 import { Stack } from "expo-router";
 
@@ -55,6 +54,13 @@ function RootLayoutNav() {
   return (
     <Stack>
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      <Stack.Screen
+        name="modal/[id]"
+        options={{
+          presentation: "modal",
+          headerShown: false,
+        }}
+      />
     </Stack>
   );
 }

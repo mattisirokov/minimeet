@@ -6,54 +6,25 @@ import {
   TouchableOpacity,
 } from "react-native";
 
+import { useRouter } from "expo-router";
+
 import Carousel from "react-native-reanimated-carousel";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 
-import EventCard from "./EventCard";
+import { events } from "@/placeholder-data/placeholder-events";
 
-const events = [
-  {
-    id: 1,
-    title: "Making pizza with Italians",
-    image: "https://picsum.photos/200/300",
-    icon: "cutlery",
-    category: "Food",
-    city: "Paris",
-  },
-  {
-    id: 2,
-    title: "Beer tasting with Germans",
-    image: "https://picsum.photos/200/300",
-    icon: "cutlery",
-    category: "Drinks",
-    city: "Berlin",
-  },
-  {
-    id: 3,
-    title: "Wine tasting in France",
-    image: "https://picsum.photos/200/300",
-    icon: "cutlery",
-    category: "Drinks",
-    city: "Paris",
-  },
-  {
-    id: 4,
-    title: "Sushi making in Japan",
-    image: "https://picsum.photos/200/300",
-    icon: "cutlery",
-    category: "Food",
-    city: "Tokyo",
-  },
-];
+import EventCard from "./EventCard";
 
 const { width } = Dimensions.get("window");
 
 const EventsNearYou = () => {
+  const router = useRouter();
+
   return (
     <View style={styles.componentWrapper}>
       <View style={styles.headerContainer}>
         <Text style={styles.header}>Upcoming events</Text>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => router.push("/explore")}>
           <Text>See all</Text>
         </TouchableOpacity>
       </View>
