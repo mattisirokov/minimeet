@@ -9,7 +9,7 @@ import * as SplashScreen from "expo-splash-screen";
 import { AuthProvider, useAuth } from "@/contexts/AuthContext";
 import { useFonts } from "expo-font";
 
-import Auth from "@/components/Auth";
+import Auth from "@/components/authentication/Auth";
 
 export { ErrorBoundary } from "expo-router";
 

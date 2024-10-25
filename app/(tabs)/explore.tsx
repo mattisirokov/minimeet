@@ -10,7 +10,7 @@ import Animated, {
 } from "react-native-reanimated";
 
 import ListViewToggle from "@/components/map/ListViewToggle";
-import Map from "@/components/Map";
+import Map from "@/components/map/Map";
 import EventListView from "@/components/event-list/EventListView";
 
 function MapOrListToggleContainer({

@@ -13,7 +13,7 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 import { events } from "@/placeholder-data/placeholder-events";
 
-import EventCard from "./EventCard";
+import EventCard from "../cards/EventCard";
 
 const { width } = Dimensions.get("window");
 

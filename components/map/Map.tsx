@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 
 import MapView, { Marker } from "react-native-maps";
 
-import CustomMarker from "./map/CustomMarker";
+import CustomMarker from "@/components/map/CustomMarker";
 
 import { events } from "@/placeholder-data/placeholder-events";
 

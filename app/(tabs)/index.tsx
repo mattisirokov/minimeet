@@ -1,9 +1,9 @@
 import { StyleSheet, ScrollView } from "react-native";
 
-import WelcomeBanner from "@/components/WelcomeBanner";
-import EventsNearYou from "@/components/EventsNearYou";
-import TopCreators from "@/components/TopCreators";
-import FeaturedCategories from "@/components/FeaturedCategories";
+import WelcomeBanner from "@/components/welcome/WelcomeBanner";
+import EventsNearYou from "@/components/carousels/EventsNearYou";
+import TopCreators from "@/components/carousels/TopCreators";
+import FeaturedCategories from "@/components/carousels/FeaturedCategories";
 
 export default function TabOneScreen() {
   return (

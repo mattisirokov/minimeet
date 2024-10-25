@@ -36,6 +36,11 @@ yarn-error.*
 # notes
 notes.md
 
+# ignore everything in the placeholder-data folder
+placeholder-data/*
+
+# ignore everything in the assets folder
+assets/images/placeholder-images/*
 
 # typescript
 *.tsbuildinfo

@@ -1,10 +1,10 @@
 import React from "react";
 import { StyleSheet, Image, TextInput } from "react-native";
-import { View, Text } from "./Themed";
+import { View, Text } from "../Themed";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 import Colors from "@/constants/Colors";
-import FilterCarousel from "./FilterCarousel";
+import FilterCarousel from "../carousels/FilterCarousel";
 
 const Header = () => {
   return (

@@ -1,8 +1,7 @@
 import { View, StyleSheet } from "react-native";
 
 import { filterItems } from "@/placeholder-data/placeholder-filters";
-
-import FilterItem from "./FilterItem";
+import FilterItem from "../FilterItem";
 
 export default function FilterCarousel() {
   return (

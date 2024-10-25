@@ -1,8 +1,8 @@
 import { StyleSheet, Dimensions } from "react-native";
-import { View, Text } from "./Themed";
+import { View, Text } from "../Themed";
 
 import Carousel from "react-native-reanimated-carousel";
-import CreatorCard from "./CreatorCard";
+import CreatorCard from "../cards/CreatorCard";
 
 import { topCreators } from "@/placeholder-data/placeholder-creators";
 

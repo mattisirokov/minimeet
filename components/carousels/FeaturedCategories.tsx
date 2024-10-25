@@ -1,8 +1,8 @@
 import React from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
-import { View, Text } from "./Themed";
+import { View, Text } from "../Themed";
 
-import CategoryCard from "./CategoryCard";
+import CategoryCard from "../cards/CategoryCard";
 
 import { featuredCategories } from "@/placeholder-data/placeholder-categories";
 import Colors from "@/constants/Colors";

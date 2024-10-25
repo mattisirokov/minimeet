@@ -23,16 +23,7 @@ export default function TabLayout() {
           tabBarActiveTintColor: Colors["light"].tabIconSelected,
           tabBarInactiveTintColor: Colors["light"].tabIconDefault,
           headerShown: useClientOnlyValue(false, false),
-          tabBarStyle: {
-            position: "absolute",
-            bottom: Colors["light"].bottomNavigationElevation,
-            left: 20,
-            right: 20,
-            backgroundColor: Colors["light"].tabBarColor,
-            borderRadius: Colors["light"].borderRadius,
-            height: Colors["light"].bottomNavigationHeight,
-            ...styles.shadow,
-          },
+
           tabBarItemStyle: {
             height: 60,
             paddingVertical: 5,
