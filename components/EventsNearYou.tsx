@@ -44,6 +44,7 @@ const EventsNearYou = () => {
             category={item.category}
             city={item.city}
             icon={item.icon as keyof typeof FontAwesome.glyphMap}
+            id={item.id}
           />
         )}
         panGestureHandlerProps={{

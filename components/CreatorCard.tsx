@@ -1,30 +1,18 @@
 import React from "react";
 import { View, Text, Image, StyleSheet } from "react-native";
 
-import Colors from "@/constants/Colors"; // Assuming you have this
+import Colors from "@/constants/Colors";
 
-const EventCard = () => {
+const CreatorCard = ({ creator }: { creator: any }) => {
   return (
     <View style={styles.card}>
-      <Image
-        source={{ uri: "https://picsum.photos/200/300150" }}
-        style={styles.eventImage}
-      />
+      <Image source={{ uri: creator.image }} style={styles.eventImage} />
 
       <View style={styles.detailsContainer}>
-        <Text style={styles.eventDate}>Something here</Text>
-        <Text style={styles.eventTitle}>Something here</Text>
+        <Text style={styles.eventDate}>{creator.followers} followers</Text>
+        <Text style={styles.eventTitle}>{creator.name}</Text>
         <View style={styles.locationContainer}>
-          <Text style={styles.eventLocation}>Something here</Text>
-        </View>
-
-        <View style={styles.iconContainer}>
-          <Text>🎉 🎂</Text>
-        </View>
-
-        {/* Bottom Badge/Tag */}
-        <View style={styles.badgeContainer}>
-          <Text style={styles.badgeText}>Something here</Text>
+          <Text style={styles.eventLocation}>{creator.description}</Text>
         </View>
       </View>
     </View>
@@ -33,7 +21,7 @@ const EventCard = () => {
 
 const styles = StyleSheet.create({
   card: {
-    width: 180, // Adjust based on need
+    width: 180,
     borderRadius: 15,
     backgroundColor: "#fff",
     shadowColor: "#000",
@@ -41,7 +29,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 5,
     elevation: 5,
-    marginBottom: 20,
   },
   eventImage: {
     width: "100%",
@@ -89,4 +76,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default EventCard;
+export default CreatorCard;

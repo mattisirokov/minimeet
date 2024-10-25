@@ -16,7 +16,8 @@ export const events: EventType[] = [
   {
     id: 1,
     title: "Influencer Wellness Retreat: Sauna and Ice Plunge",
-    image: "https://picsum.photos/200/300",
+    image:
+      "/Users/mattisirokov/Documents/Develop/minimeet-native/assets/images/placeholder-images/port.jpg",
     icon: "tint",
     category: "Wellness",
     city: "Helsinki",
@@ -29,7 +30,8 @@ export const events: EventType[] = [
   {
     id: 2,
     title: "Instagram-Worthy Helsinki Design Tour",
-    image: "https://picsum.photos/200/300",
+    image:
+      "/Users/mattisirokov/Documents/Develop/minimeet-native/assets/images/placeholder-images/concert.jpg",
     icon: "map-signs",
     category: "Culture",
     city: "Helsinki",
@@ -42,7 +44,8 @@ export const events: EventType[] = [
   {
     id: 3,
     title: "TikTok Chef's Nordic Cuisine Masterclass",
-    image: "https://picsum.photos/200/300",
+    image:
+      "/Users/mattisirokov/Documents/Develop/minimeet-native/assets/images/placeholder-images/chef.jpg",
     icon: "cutlery",
     category: "Food",
     city: "Helsinki",
@@ -55,7 +58,8 @@ export const events: EventType[] = [
   {
     id: 4,
     title: "Sunset Yacht Party with Top Travel Vloggers",
-    image: "https://picsum.photos/200/300",
+    image:
+      "/Users/mattisirokov/Documents/Develop/minimeet-native/assets/images/placeholder-images/boat-trip.jpg",
     icon: "ship",
     category: "Sightseeing",
     city: "Helsinki",

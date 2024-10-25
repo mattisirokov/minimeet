@@ -75,7 +75,7 @@ export default function TabLayout() {
           options={{
             title: "Favorites",
             tabBarIcon: ({ color }) => (
-              <TabBarIcon name="heart" color={color} />
+              <TabBarIcon name="calendar" color={color} />
             ),
           }}
         />

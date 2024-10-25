@@ -1,4 +1,4 @@
-const tintColorLight = "#E71D36";
+const tintColorLight = "#c7b9ab";
 const borderRadius = 15;
 const bottomNavigationElevation = 30;
 const bottomNavigationHeight = 60;

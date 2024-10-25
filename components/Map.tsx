@@ -1,5 +1,6 @@
 import { lightBlueMapStyle } from "@/config/mapStyles";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
+
 import MapView, { Marker } from "react-native-maps";
 
 import CustomMarker from "./map/CustomMarker";
@@ -17,26 +18,21 @@ const INITIAL_POSITION = {
 
 export default function Map() {
   return (
-    <View style={styles.container}>
-      <MapView
-        style={styles.map}
-        initialRegion={INITIAL_POSITION}
-        customMapStyle={lightBlueMapStyle}
-      >
-        {events.map((event) => (
-          <Marker key={event.id} coordinate={event.coordinates}>
-            <CustomMarker event={event} />
-          </Marker>
-        ))}
-      </MapView>
-    </View>
+    <MapView
+      style={styles.map}
+      initialRegion={INITIAL_POSITION}
+      customMapStyle={lightBlueMapStyle}
+    >
+      {events.map((event) => (
+        <Marker key={event.id} coordinate={event.coordinates}>
+          <CustomMarker event={event} />
+        </Marker>
+      ))}
+    </MapView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   map: {
     width: "100%",
     height: "100%",

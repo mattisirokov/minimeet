@@ -1,5 +1,8 @@
 import React from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { Image } from "expo-image";
+
+import { useRouter } from "expo-router";
 
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 
@@ -11,13 +14,27 @@ type EventCardProps = {
   category: string;
   city: string;
   icon: keyof typeof FontAwesome.glyphMap;
+  id: number;
 };
 
-const EventCard = ({ title, image, category, city, icon }: EventCardProps) => {
+const EventCard = ({
+  title,
+  image,
+  category,
+  city,
+  icon,
+  id,
+}: EventCardProps) => {
+  const router = useRouter();
+
+  const handlePress = () => {
+    router.push(`/modal/${id.toString()}`);
+  };
+
   return (
-    <View style={styles.itemWrapper}>
+    <TouchableOpacity style={styles.itemWrapper} onPress={handlePress}>
       <View style={styles.lightPill}>
-        <FontAwesome name={icon} size={16} color={"white"} />
+        <FontAwesome name={icon} size={16} color={"black"} />
         <Text style={styles.lightPillText}>{category}</Text>
       </View>
       <View style={styles.cityPill}>
@@ -31,7 +48,7 @@ const EventCard = ({ title, image, category, city, icon }: EventCardProps) => {
       />
       <View style={styles.imageOverlay} />
       <Text style={styles.itemTitle}>{title}</Text>
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -71,7 +88,8 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 10,
     left: 10,
-    backgroundColor: Colors["light"].tint,
+    backgroundColor: "white",
+    opacity: 0.5,
     paddingTop: 5,
     paddingBottom: 5,
     paddingLeft: 20,
@@ -85,7 +103,7 @@ const styles = StyleSheet.create({
     zIndex: 100,
   },
   lightPillText: {
-    color: "white",
+    color: "black",
     fontSize: 16,
     fontWeight: "bold",
   },

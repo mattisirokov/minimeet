@@ -31,7 +31,7 @@ const TopCreators = () => {
           <View style={styles.slide}>
             {item.map((creator, index) => (
               <View key={index} style={styles.cardContainer}>
-                <CreatorCard />
+                <CreatorCard creator={creator} />
               </View>
             ))}
           </View>
@@ -45,6 +45,7 @@ const styles = StyleSheet.create({
   container: {
     width: "100%",
     padding: 20,
+    paddingBottom: 0,
   },
   header: {
     fontSize: 20,
@@ -57,6 +58,7 @@ const styles = StyleSheet.create({
   },
   cardContainer: {
     width: width / 2 - 1,
+    height: "100%",
   },
 });
 
