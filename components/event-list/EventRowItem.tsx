@@ -2,9 +2,9 @@ import { StyleSheet, Image, TouchableOpacity } from "react-native";
 import { View, Text } from "@/components/Themed";
 import { useRouter } from "expo-router";
 
-import { EventType } from "@/placeholder-data/placeholder-events";
+import { SupabaseEventType } from "@/types";
 
-export default function EventRowItem({ event }: { event: EventType }) {
+export default function EventRowItem({ event }: { event: SupabaseEventType }) {
   const router = useRouter();
 
   return (
@@ -22,11 +22,11 @@ export default function EventRowItem({ event }: { event: EventType }) {
         <View style={styles.infoRow}>
           <View style={styles.infoColumn}>
             <Text style={styles.label}>Date</Text>
-            <Text style={styles.infoText}>{event.numberOfPeopleGoing}</Text>
+            <Text style={styles.infoText}>{event.date_of_event}</Text>
           </View>
           <View style={styles.infoColumn}>
             <Text style={styles.label}>Time</Text>
-            <Text style={styles.infoText}>{event.city}</Text>
+            <Text style={styles.infoText}>{event.time_of_event}</Text>
           </View>
         </View>
       </View>

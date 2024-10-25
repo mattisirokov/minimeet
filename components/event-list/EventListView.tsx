@@ -2,9 +2,13 @@ import { ScrollView, StyleSheet } from "react-native";
 
 import EventRowItem from "./EventRowItem";
 
-import { events } from "@/placeholder-data/placeholder-events";
+import { SupabaseEventType } from "@/types";
 
-const EventListView = () => {
+type EventListViewProps = {
+  events: SupabaseEventType[];
+};
+
+const EventListView = ({ events }: EventListViewProps) => {
   return (
     <ScrollView style={styles.container}>
       {events.map((event) => (

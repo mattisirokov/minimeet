@@ -1,14 +1,15 @@
-import { lightBlueMapStyle } from "@/config/mapStyles";
+import React, { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
-
 import MapView, { Marker } from "react-native-maps";
+
+import { getGeolocation } from "@/services/geolocationService";
+import { lightBlueMapStyle } from "@/config/mapStyles";
+
+import { EventWithCoordinates, SupabaseEventType } from "@/types";
 
 import CustomMarker from "@/components/map/CustomMarker";
 
-import { events } from "@/placeholder-data/placeholder-events";
-
 // This has been hardcoded to Helsinki, Finland
-
 const INITIAL_POSITION = {
   latitude: 60.1699,
   longitude: 24.9384,
@@ -16,14 +17,29 @@ const INITIAL_POSITION = {
   longitudeDelta: 0.06,
 };
 
-export default function Map() {
+type MapProps = {
+  events: SupabaseEventType[];
+};
+
+export default function Map({ events }: MapProps) {
+  const [coordinates, setCoordinates] = useState<EventWithCoordinates[]>([]);
+
+  useEffect(() => {
+    async function fetchCoordinates() {
+      const result = await getGeolocation(events);
+      setCoordinates(result);
+    }
+
+    fetchCoordinates();
+  }, [events]);
+
   return (
     <MapView
       style={styles.map}
       initialRegion={INITIAL_POSITION}
       customMapStyle={lightBlueMapStyle}
     >
-      {events.map((event) => (
+      {coordinates.map((event: EventWithCoordinates) => (
         <Marker key={event.id} coordinate={event.coordinates}>
           <CustomMarker event={event} />
         </Marker>

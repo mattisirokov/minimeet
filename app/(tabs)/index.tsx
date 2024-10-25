@@ -1,4 +1,4 @@
-import { StyleSheet, ScrollView } from "react-native";
+import { ScrollView } from "react-native";
 
 import WelcomeBanner from "@/components/welcome/WelcomeBanner";
 import EventsNearYou from "@/components/carousels/EventsNearYou";
@@ -15,14 +15,3 @@ export default function TabOneScreen() {
     </ScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  scrollContainer: {
-    flexGrow: 1,
-  },
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "flex-start",
-  },
-});

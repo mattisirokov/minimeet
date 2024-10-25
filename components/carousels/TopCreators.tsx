@@ -3,9 +3,9 @@ import { View, Text } from "../Themed";
 
 import Carousel from "react-native-reanimated-carousel";
 import CreatorCard from "../cards/CreatorCard";
+import { useEvents } from "@/contexts/EventsContext";
 
-import { topCreators } from "@/placeholder-data/placeholder-creators";
-
+// import { topCreators } from "@/placeholder-data/placeholder-creators";
 const { width } = Dimensions.get("window");
 
 const groupCreatorsInPairs = (creators: any) => {
@@ -17,19 +17,19 @@ const groupCreatorsInPairs = (creators: any) => {
 };
 
 const TopCreators = () => {
-  const groupedCreators = groupCreatorsInPairs(topCreators);
-
+  // const groupedCreators = groupCreatorsInPairs(topCreators);
+  const { topCreators } = useEvents();
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Our top meet creators</Text>
       <Carousel
         width={width}
         height={250}
-        data={groupedCreators}
+        data={topCreators}
         scrollAnimationDuration={1000}
         renderItem={({ item }) => (
           <View style={styles.slide}>
-            {item.map((creator, index) => (
+            {topCreators.map((creator, index) => (
               <View key={index} style={styles.cardContainer}>
                 <CreatorCard creator={creator} />
               </View>

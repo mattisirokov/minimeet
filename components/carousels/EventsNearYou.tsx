@@ -11,15 +11,16 @@ import { useRouter } from "expo-router";
 import Carousel from "react-native-reanimated-carousel";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 
-import { events } from "@/placeholder-data/placeholder-events";
+// import { events } from "@/placeholder-data/placeholder-events";
 
+import { useEvents } from "@/contexts/EventsContext";
 import EventCard from "../cards/EventCard";
 
 const { width } = Dimensions.get("window");
 
 const EventsNearYou = () => {
   const router = useRouter();
-
+  const { allEventsForCurrentCity } = useEvents();
   return (
     <View style={styles.componentWrapper}>
       <View style={styles.headerContainer}>
@@ -34,7 +35,7 @@ const EventsNearYou = () => {
         height={250}
         autoPlay={true}
         autoPlayInterval={5000}
-        data={events}
+        data={allEventsForCurrentCity}
         mode="parallax"
         renderItem={({ item }) => (
           <EventCard

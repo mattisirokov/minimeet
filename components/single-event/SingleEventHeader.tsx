@@ -12,9 +12,13 @@ import { useRouter } from "expo-router";
 import Colors from "@/constants/Colors";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 
-import { EventType } from "@/placeholder-data/placeholder-events";
+import { SupabaseEventType } from "@/types";
 
-const SingleEventHeader = ({ event }: { event: EventType | undefined }) => {
+const SingleEventHeader = ({
+  event,
+}: {
+  event: SupabaseEventType | undefined;
+}) => {
   const router = useRouter();
 
   if (!event) {
@@ -31,11 +35,7 @@ const SingleEventHeader = ({ event }: { event: EventType | undefined }) => {
         >
           <FontAwesome name="close" size={15} color="white" />
         </TouchableOpacity>
-        <Image
-          source={{ uri: event.image }}
-          style={styles.image}
-          resizeMode="cover"
-        />
+        <Image source={{ uri: event.image }} style={styles.image} />
         <View style={styles.eventInfoContainer}>
           <View style={styles.eventInfo}>
             <Text style={styles.eventTitle}>{event.title}</Text>
@@ -57,7 +57,7 @@ const SingleEventHeader = ({ event }: { event: EventType | undefined }) => {
                   style={styles.locationIcon}
                 />
                 <Text style={styles.locationText}>
-                  {event.numberOfPeopleGoing} people going
+                  {event.number_of_attendees} people going
                 </Text>
               </View>
             </View>
@@ -80,7 +80,6 @@ const styles = StyleSheet.create({
   image: {
     width: "100%",
     height: "100%",
-    resizeMode: "cover",
   },
   imageOverlay: {
     position: "absolute",

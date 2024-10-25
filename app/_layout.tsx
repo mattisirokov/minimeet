@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 
 import { Stack } from "expo-router";
 
@@ -7,6 +7,8 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import * as SplashScreen from "expo-splash-screen";
 
 import { AuthProvider, useAuth } from "@/contexts/AuthContext";
+import { EventsProvider } from "@/contexts/EventsContext";
+
 import { useFonts } from "expo-font";
 
 import Auth from "@/components/authentication/Auth";
@@ -35,7 +37,9 @@ export default function RootLayout() {
 
   return (
     <AuthProvider>
-      <RouterComponent />
+      <EventsProvider>
+        <RouterComponent />
+      </EventsProvider>
     </AuthProvider>
   );
 }

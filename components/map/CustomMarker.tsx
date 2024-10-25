@@ -1,10 +1,11 @@
 import { View, StyleSheet, Image, TouchableOpacity } from "react-native";
 import React from "react";
-import { EventType } from "@/placeholder-data/placeholder-events";
 import Colors from "@/constants/Colors";
 import { useRouter } from "expo-router";
 
-const CustomMarker = ({ event }: { event: EventType }) => {
+import { SupabaseEventType } from "@/types";
+
+const CustomMarker = ({ event }: { event: SupabaseEventType }) => {
   const router = useRouter();
 
   const handlePress = () => {
@@ -41,7 +42,6 @@ const styles = StyleSheet.create({
   innerImage: {
     width: "100%",
     height: "100%",
-    resizeMode: "cover",
   },
   pointer: {
     width: 10,

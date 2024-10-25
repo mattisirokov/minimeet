@@ -6,22 +6,32 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import Colors from "@/constants/Colors";
 import FilterCarousel from "../carousels/FilterCarousel";
 
+import { useAuth } from "@/contexts/AuthContext";
+import { useEvents } from "@/contexts/EventsContext";
+
 const Header = () => {
+  const { user } = useAuth();
+  const { allEventsForCurrentCity } = useEvents();
+
   return (
     <View style={styles.container}>
       <View style={styles.profileContainer}>
         <Image
           source={{
-            uri: "https://gravatar.com/avatar/27205e5c51cb03f862138b22bcb5dc20f94a342e744ff6df1b8dc8af3c865109",
+            uri: user.avatar_url,
           }}
           style={styles.profileImage}
         />
-        <Text style={styles.welcomeText}>Welcome Matti Sirokov!</Text>
+        <Text style={styles.welcomeText}>
+          Welcome {user.first_name || user.email}!
+        </Text>
       </View>
 
-      <Text style={styles.title}>Find Mini Meets Near You</Text>
+      <Text style={styles.title}>Find MiniMeets Near You</Text>
 
-      <Text style={styles.subtext}>258 events near Helsinki</Text>
+      <Text style={styles.subtext}>
+        {allEventsForCurrentCity.length} events near Helsinki
+      </Text>
 
       <View style={styles.searchContainer}>
         <FontAwesome name="search" size={24} color={Colors["light"].text} />

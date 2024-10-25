@@ -1,18 +1,21 @@
 import React from "react";
-import { StyleSheet, TouchableOpacity } from "react-native";
+import { StyleSheet } from "react-native";
 import { View, Text } from "../Themed";
 
 import CategoryCard from "../cards/CategoryCard";
 
-import { featuredCategories } from "@/placeholder-data/placeholder-categories";
+import { useEvents } from "@/contexts/EventsContext";
+
 import Colors from "@/constants/Colors";
 
 const FeaturedCategories = () => {
+  const { eventCategories } = useEvents();
+
   return (
     <View style={styles.componentWrapper}>
       <Text style={styles.header}>Featured Categories</Text>
       <View style={styles.categoriesContainer}>
-        {featuredCategories.slice(0, 4).map((category, index) => (
+        {eventCategories.slice(0, 4).map((category, index) => (
           <CategoryCard key={index} category={category} />
         ))}
       </View>

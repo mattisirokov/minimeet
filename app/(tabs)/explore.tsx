@@ -6,12 +6,14 @@ import Animated, {
   useAnimatedStyle,
   withTiming,
   interpolate,
-  Extrapolate,
+  Extrapolation,
 } from "react-native-reanimated";
 
 import ListViewToggle from "@/components/map/ListViewToggle";
 import Map from "@/components/map/Map";
 import EventListView from "@/components/event-list/EventListView";
+
+import { useEvents } from "@/contexts/EventsContext";
 
 function MapOrListToggleContainer({
   isListView,
@@ -21,6 +23,7 @@ function MapOrListToggleContainer({
   setIsListView: (isListView: boolean) => void;
 }) {
   const rotation = useSharedValue(0);
+  const { allEventsForCurrentCity } = useEvents();
 
   useEffect(() => {
     rotation.value = withTiming(isListView ? 180 : 0, { duration: 500 });
@@ -31,7 +34,7 @@ function MapOrListToggleContainer({
       rotation.value,
       [0, 180],
       [0, 180],
-      Extrapolate.CLAMP
+      Extrapolation.CLAMP
     );
     return {
       transform: [{ rotateY: `${rotateY}deg` }],
@@ -45,7 +48,7 @@ function MapOrListToggleContainer({
       rotation.value,
       [0, 180],
       [180, 360],
-      Extrapolate.CLAMP
+      Extrapolation.CLAMP
     );
     return {
       transform: [{ rotateY: `${rotateY}deg` }],
@@ -64,12 +67,12 @@ function MapOrListToggleContainer({
       </View>
 
       <Animated.View style={[styles.flipCard, frontAnimatedStyle]}>
-        <Map />
+        <Map events={allEventsForCurrentCity} />
       </Animated.View>
       <Animated.View
         style={[styles.flipCard, styles.flipCardBack, backAnimatedStyle]}
       >
-        <EventListView />
+        <EventListView events={allEventsForCurrentCity} />
       </Animated.View>
     </View>
   );

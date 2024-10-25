@@ -1,24 +1,26 @@
 import { View, Text, StyleSheet } from "react-native";
 import { Image } from "expo-image";
 
-import { Category } from "@/placeholder-data/placeholder-categories";
-
-import Colors from "@/constants/Colors";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 
-const CategoryCard = ({ category }: { category: Category }) => {
+import Colors from "@/constants/Colors";
+import { getCategoryIcon } from "@/services/categoryIconHelper";
+
+import { EventCategory } from "@/types";
+
+const CategoryCard = ({ category }: { category: EventCategory }) => {
   return (
     <View style={styles.container}>
-      <Image source={category.image} style={styles.backgroundImage} />
+      <Image source={{ uri: category.image }} style={styles.backgroundImage} />
       <View style={styles.imageOverlay} />
       <View style={styles.contentContainer}>
         <FontAwesome
-          name={category.icon as any}
+          name={getCategoryIcon(category)}
           size={30}
           color="white"
           style={styles.icon}
         />
-        <Text style={styles.name}>{category.name}</Text>
+        <Text style={styles.name}>{category.title}</Text>
       </View>
     </View>
   );
@@ -56,6 +58,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     zIndex: 1,
+    resizeMode: "cover",
   },
   contentContainer: {
     position: "absolute",

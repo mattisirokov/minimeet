@@ -44,7 +44,7 @@ const EventCard = ({
       <Image
         source={{ uri: image }}
         style={styles.itemImage}
-        resizeMode="cover"
+        contentFit="cover"
       />
       <View style={styles.imageOverlay} />
       <Text style={styles.itemTitle}>{title}</Text>

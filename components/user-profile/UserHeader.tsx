@@ -7,7 +7,8 @@ const UserHeader = () => {
 
   return (
     <View>
-      <Text>{user?.email}</Text>
+      <Text>{user.first_name}</Text>
+      <Text>{user.last_name}</Text>
       <Button title="Log out" onPress={() => signOut()} />
     </View>
   );

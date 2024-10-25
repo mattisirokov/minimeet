@@ -1,18 +1,21 @@
-import React from "react";
 import { View, Text, Image, StyleSheet } from "react-native";
 
 import Colors from "@/constants/Colors";
 
-const CreatorCard = ({ creator }: { creator: any }) => {
+import { ExtendedUser } from "@/types";
+
+const CreatorCard = ({ creator }: { creator: ExtendedUser }) => {
   return (
     <View style={styles.card}>
-      <Image source={{ uri: creator.image }} style={styles.eventImage} />
+      <Image source={{ uri: creator.avatar_url }} style={styles.eventImage} />
 
       <View style={styles.detailsContainer}>
-        <Text style={styles.eventDate}>{creator.followers} followers</Text>
-        <Text style={styles.eventTitle}>{creator.name}</Text>
+        <Text style={styles.eventDate}>{creator.first_name}</Text>
+        <Text style={styles.eventTitle}>{creator.first_name}</Text>
         <View style={styles.locationContainer}>
-          <Text style={styles.eventLocation}>{creator.description}</Text>
+          <Text style={styles.eventLocation}>
+            {creator.top_creator ? "Top creator" : "Creator"}
+          </Text>
         </View>
       </View>
     </View>
