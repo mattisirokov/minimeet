@@ -56,7 +56,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       setSession(session);
       if (session?.user) {
         const userData = await fetchUserData(session.user.id);
-        console.log("Fetched user data:", userData);
         setUser({ ...session.user, ...userData });
       } else {
         setUser(defaultUser);

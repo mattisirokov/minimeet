@@ -3,6 +3,7 @@ import { createContext, useContext, useState, useEffect } from "react";
 import { supabase } from "@/config/supabase";
 
 import { EventCategory, ExtendedUser, SupabaseEventType } from "@/types";
+import { useAuth } from "@/contexts/AuthContext";
 
 type EventsContextType = {
   allEventsForCurrentCity: SupabaseEventType[];
@@ -10,6 +11,7 @@ type EventsContextType = {
   isLoading: boolean;
   eventCategories: EventCategory[];
   topCreators: ExtendedUser[];
+  createNewEvent: (event: SupabaseEventType) => Promise<void>;
 };
 
 const EventsContext = createContext<EventsContextType>({
@@ -18,11 +20,14 @@ const EventsContext = createContext<EventsContextType>({
   isLoading: true,
   eventCategories: [],
   topCreators: [],
+  createNewEvent: async () => {},
 });
 
 export const EventsProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
+  const { user } = useAuth();
+
   const [allEventsForCurrentCity, setAllEventsForCurrentCity] = useState<
     SupabaseEventType[]
   >([]);
@@ -47,7 +52,6 @@ export const EventsProvider: React.FC<{ children: React.ReactNode }> = ({
       return;
     }
 
-    console.log("Fetched events:", data);
     setAllEventsForCurrentCity(data as SupabaseEventType[]);
     setIsLoading(false);
   }
@@ -61,7 +65,6 @@ export const EventsProvider: React.FC<{ children: React.ReactNode }> = ({
       return;
     }
 
-    console.log("Fetched categories:", data);
     setEventCategories(data);
   }
 
@@ -77,7 +80,6 @@ export const EventsProvider: React.FC<{ children: React.ReactNode }> = ({
       return;
     }
 
-    console.log("Fetched top creators:", data);
     setTopCreators(data);
   }
 
@@ -88,6 +90,42 @@ export const EventsProvider: React.FC<{ children: React.ReactNode }> = ({
     return allEventsForCurrentCity.find(
       (event) => event.id.toString() === searchId
     );
+  }
+
+  // function to create a new event
+
+  async function createNewEvent(
+    event: Omit<
+      SupabaseEventType,
+      "id" | "created_at" | "updated_at" | "host_id"
+    >
+  ) {
+    // current user ID
+    const currentUserId = user.user_id;
+
+    if (!currentUserId) {
+      throw new Error("User must be logged in to create an event");
+    }
+
+    const { data, error } = await supabase
+      .from("Events")
+      .insert([{ ...event, host_id: currentUserId }])
+      .select();
+
+    if (error) {
+      console.error("Error creating new event:", error);
+      throw error;
+    }
+
+    if (!data || data.length === 0) {
+      throw new Error("No data returned from insert operation");
+    }
+
+    const newEvent = data[0] as SupabaseEventType;
+
+    setAllEventsForCurrentCity((prevEvents) => [...prevEvents, newEvent]);
+
+    return newEvent;
   }
 
   useEffect(() => {
@@ -102,6 +140,8 @@ export const EventsProvider: React.FC<{ children: React.ReactNode }> = ({
     isLoading,
     eventCategories,
     topCreators,
+    // @ts-ignore
+    createNewEvent,
   };
 
   return (
