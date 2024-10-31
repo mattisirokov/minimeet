@@ -12,9 +12,9 @@ import CustomMarker from "@/components/map/CustomMarker";
 // This has been hardcoded to Helsinki, Finland
 const INITIAL_POSITION = {
   latitude: 60.1699,
-  longitude: 24.9384,
-  latitudeDelta: 0.06,
-  longitudeDelta: 0.06,
+  longitude: 24.9484,
+  latitudeDelta: 0.02,
+  longitudeDelta: 0.01,
 };
 
 type MapProps = {

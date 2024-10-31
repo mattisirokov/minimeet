@@ -1,15 +1,14 @@
 import { StyleSheet } from "react-native";
 
-import EditScreenInfo from "@/components/EditScreenInfo";
 import { Text, View } from "@/components/Themed";
 import UserHeader from "@/components/user-profile/UserHeader";
 
-export default function TabTwoScreen() {
-  return (
-    <View style={styles.container}>
-      <UserHeader />
-    </View>
-  );
+import { useAuth } from "@/contexts/AuthContext";
+
+export default function SettingsScreen() {
+  const { user, signOut } = useAuth();
+
+  return <UserHeader user={user} signOut={signOut} />;
 }
 
 const styles = StyleSheet.create({

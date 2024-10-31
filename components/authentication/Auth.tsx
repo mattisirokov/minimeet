@@ -1,7 +1,12 @@
 import React, { useState } from "react";
 import { Alert, StyleSheet, View } from "react-native";
-import { Button, Input } from "@rneui/themed";
+
 import { supabase } from "@/config/supabase";
+
+import { Text } from "@/components/Themed";
+import { Input } from "@rneui/themed";
+
+import Button from "@/components/buttons/Button";
 
 export default function Auth() {
   const [email, setEmail] = useState("");
@@ -37,6 +42,7 @@ export default function Auth() {
 
   return (
     <View style={styles.container}>
+      <Text style={styles.title}>Sign in or sign up</Text>
       <View style={[styles.verticallySpaced, styles.mt20]}>
         <Input
           label="Email"
@@ -59,19 +65,11 @@ export default function Auth() {
         />
       </View>
       <View style={[styles.verticallySpaced, styles.mt20]}>
-        <Button
-          title="Sign in"
-          disabled={loading}
-          onPress={() => signInWithEmail()}
-        />
+        <Button title="Sign in" onPress={() => signInWithEmail()} />
       </View>
-      <View style={styles.verticallySpaced}>
-        <Button
-          title="Sign up"
-          disabled={loading}
-          onPress={() => signUpWithEmail()}
-        />
-      </View>
+      {/* <View style={styles.verticallySpaced}>
+        <Button title="Sign up" onPress={() => signUpWithEmail()} />
+      </View> */}
     </View>
   );
 }
@@ -80,6 +78,13 @@ const styles = StyleSheet.create({
   container: {
     marginTop: 40,
     padding: 12,
+    flex: 1,
+    justifyContent: "center",
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 20,
   },
   verticallySpaced: {
     paddingTop: 4,

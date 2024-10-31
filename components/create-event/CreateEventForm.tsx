@@ -1,4 +1,4 @@
-import { View, StyleSheet, Button, Alert } from "react-native";
+import { View, StyleSheet, Alert } from "react-native";
 import { useRouter } from "expo-router";
 
 import { useEvents } from "@/contexts/EventsContext";
@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { SupabaseEventType } from "@/types";
 
 import FormInput from "@/components/form-components/FormInput";
+import Button from "@/components/buttons/Button";
 
 const CreateEventForm = () => {
   const { control, handleSubmit, reset } = useForm<SupabaseEventType>();
@@ -37,7 +38,7 @@ const CreateEventForm = () => {
       <FormInput
         control={control}
         name="number_of_attendees"
-        label="Number of attendees"
+        label="Max. number of attendees"
       />
 
       <Button title="Create Event" onPress={handleSubmit(onSubmit)} />
@@ -48,6 +49,9 @@ const CreateEventForm = () => {
 const styles = StyleSheet.create({
   container: {
     padding: 20,
+    gap: 10,
+    flex: 1,
+    justifyContent: "center",
   },
 });
 

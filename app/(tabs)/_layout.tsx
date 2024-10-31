@@ -53,7 +53,7 @@ export default function TabLayout() {
         <Tabs.Screen
           name="create"
           options={{
-            title: "Create Minimeet",
+            title: "Create",
             headerShown: true,
             tabBarIcon: () => (
               <View style={styles.createIconContainer}>
@@ -63,9 +63,11 @@ export default function TabLayout() {
           }}
         />
         <Tabs.Screen
-          name="favorites"
+          name="my-meets"
           options={{
-            title: "Favorites",
+            title: "My meets",
+            headerShown: true,
+            headerTitle: "My meets",
             tabBarIcon: ({ color }) => (
               <TabBarIcon name="calendar" color={color} />
             ),
@@ -75,6 +77,8 @@ export default function TabLayout() {
           name="settings"
           options={{
             title: "Settings",
+            headerTitle: "Settings",
+            headerShown: true,
             tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color} />,
           }}
         />
