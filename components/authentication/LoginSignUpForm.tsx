@@ -8,7 +8,7 @@ import { Input } from "@rneui/themed";
 
 import Button from "@/components/buttons/Button";
 
-export default function Auth() {
+export default function LoginSignUpForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);

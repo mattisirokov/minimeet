@@ -7,11 +7,11 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import * as SplashScreen from "expo-splash-screen";
 
 import { AuthProvider, useAuth } from "@/contexts/AuthContext";
-import { EventsProvider } from "@/contexts/EventsContext";
+import { EventsAndDataProvider } from "@/contexts/EventsContext";
 
 import { useFonts } from "expo-font";
 
-import Auth from "@/components/authentication/Auth";
+import LoginSignUpForm from "@/components/authentication/LoginSignUpForm";
 
 export { ErrorBoundary } from "expo-router";
 
@@ -37,9 +37,9 @@ export default function RootLayout() {
 
   return (
     <AuthProvider>
-      <EventsProvider>
+      <EventsAndDataProvider>
         <RouterComponent />
-      </EventsProvider>
+      </EventsAndDataProvider>
     </AuthProvider>
   );
 }
@@ -51,7 +51,7 @@ function RouterComponent() {
     return null;
   }
 
-  return session ? <RootLayoutNav /> : <Auth />;
+  return session ? <RootLayoutNav /> : <LoginSignUpForm />;
 }
 
 function RootLayoutNav() {

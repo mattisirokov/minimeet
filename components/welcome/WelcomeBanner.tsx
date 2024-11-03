@@ -6,11 +6,11 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import Colors from "@/constants/Colors";
 import FilterCarousel from "../carousels/FilterCarousel";
 
-import { useAuth } from "@/contexts/AuthContext";
+import { useAuthenticatedUser } from "@/contexts/AuthContext";
 import { useEvents } from "@/contexts/EventsContext";
 
 const Header = () => {
-  const { user } = useAuth();
+  const { userProfile } = useAuthenticatedUser();
   const { allEventsForCurrentCity } = useEvents();
 
   return (
@@ -18,12 +18,12 @@ const Header = () => {
       <View style={styles.profileContainer}>
         <Image
           source={{
-            uri: user.avatar_url,
+            uri: userProfile.avatar_url,
           }}
           style={styles.profileImage}
         />
         <Text style={styles.welcomeText}>
-          Welcome {user.first_name || user.email}!
+          Welcome {userProfile.first_name || userProfile.email}!
         </Text>
       </View>
 

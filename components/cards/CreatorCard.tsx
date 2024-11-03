@@ -2,9 +2,9 @@ import { View, Text, Image, StyleSheet } from "react-native";
 
 import Colors from "@/constants/Colors";
 
-import { ExtendedUser } from "@/types";
+import { UserProfile } from "@/types";
 
-const CreatorCard = ({ creator }: { creator: ExtendedUser }) => {
+const CreatorCard = ({ creator }: { creator: UserProfile }) => {
   return (
     <View style={styles.card}>
       <Image source={{ uri: creator.avatar_url }} style={styles.eventImage} />

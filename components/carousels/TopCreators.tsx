@@ -5,20 +5,11 @@ import Carousel from "react-native-reanimated-carousel";
 import CreatorCard from "../cards/CreatorCard";
 import { useEvents } from "@/contexts/EventsContext";
 
-// import { topCreators } from "@/placeholder-data/placeholder-creators";
 const { width } = Dimensions.get("window");
 
-const groupCreatorsInPairs = (creators: any) => {
-  const pairs = [];
-  for (let i = 0; i < creators.length; i += 2) {
-    pairs.push([creators[i], creators[i + 1]]);
-  }
-  return pairs;
-};
-
 const TopCreators = () => {
-  // const groupedCreators = groupCreatorsInPairs(topCreators);
   const { topCreators } = useEvents();
+
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Our top meet creators</Text>

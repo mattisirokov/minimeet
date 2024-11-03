@@ -1,12 +1,12 @@
 import React from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { MaterialIcons, Feather } from "@expo/vector-icons";
-import { ExtendedUser } from "@/types";
+import { UserProfile } from "@/types";
 
 import Button from "@/components/buttons/Button";
 
 type UserHeaderProps = {
-  user: ExtendedUser;
+  user: UserProfile;
   signOut: () => void;
 };
 

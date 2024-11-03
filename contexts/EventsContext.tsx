@@ -2,19 +2,15 @@ import { createContext, useContext, useState, useEffect } from "react";
 
 import { supabase } from "@/config/supabase";
 
-import { EventCategory, ExtendedUser, SupabaseEventType } from "@/types";
-import { useAuth } from "@/contexts/AuthContext";
+import {
+  EventsAndUserDetailsType,
+  UserProfile,
+  SupabaseEventType,
+} from "@/types";
 
-type EventsContextType = {
-  allEventsForCurrentCity: SupabaseEventType[];
-  getEventById: (id: string | string[]) => SupabaseEventType | undefined;
-  isLoading: boolean;
-  eventCategories: EventCategory[];
-  topCreators: ExtendedUser[];
-  createNewEvent: (event: SupabaseEventType) => Promise<void>;
-};
+import { useAuthenticatedUser } from "@/contexts/AuthContext";
 
-const EventsContext = createContext<EventsContextType>({
+const EventsAndDataContext = createContext<EventsAndUserDetailsType>({
   allEventsForCurrentCity: [],
   getEventById: () => undefined,
   isLoading: true,
@@ -23,36 +19,28 @@ const EventsContext = createContext<EventsContextType>({
   createNewEvent: async () => {},
 });
 
-export const EventsProvider: React.FC<{ children: React.ReactNode }> = ({
+export const EventsAndDataProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const { user } = useAuth();
+  const { userProfile } = useAuthenticatedUser();
 
-  const [allEventsForCurrentCity, setAllEventsForCurrentCity] = useState<
-    SupabaseEventType[]
-  >([]);
+  const [allEvents, setAllEvents] = useState<SupabaseEventType[]>([]);
   const [eventCategories, setEventCategories] = useState<any[]>([]);
-  const [topCreators, setTopCreators] = useState<any[]>([]);
+  const [topCreators, setTopCreators] = useState<UserProfile[]>([]);
 
   const [isLoading, setIsLoading] = useState(true);
 
-  const CURRENT_CITY = "Helsinki"; // TODO: get this from user location
-
   // Get all the events for the users current city
 
-  async function fetchAllEventsForUsersCity() {
+  async function fetchAllMiniMeets() {
     setIsLoading(true);
-    const { data, error } = await supabase
-      .from("Events")
-      .select("*")
-      .eq("city", CURRENT_CITY);
+    const { data, error } = await supabase.from("Events").select("*");
 
     if (error) {
       console.error("Error fetching data:", error);
       return;
     }
-
-    setAllEventsForCurrentCity(data as SupabaseEventType[]);
+    setAllEvents(data as SupabaseEventType[]);
     setIsLoading(false);
   }
 
@@ -64,7 +52,6 @@ export const EventsProvider: React.FC<{ children: React.ReactNode }> = ({
       console.error("Error fetching data:", error);
       return;
     }
-
     setEventCategories(data);
   }
 
@@ -87,9 +74,7 @@ export const EventsProvider: React.FC<{ children: React.ReactNode }> = ({
 
   function getEventById(id: string | string[]) {
     const searchId = Array.isArray(id) ? id[0] : id;
-    return allEventsForCurrentCity.find(
-      (event) => event.id.toString() === searchId
-    );
+    return allEvents.find((event) => event.id.toString() === searchId);
   }
 
   // function to create a new event
@@ -100,8 +85,7 @@ export const EventsProvider: React.FC<{ children: React.ReactNode }> = ({
       "id" | "created_at" | "updated_at" | "host_id"
     >
   ) {
-    // current user ID
-    const currentUserId = user.user_id;
+    const currentUserId = userProfile.user_id;
 
     if (!currentUserId) {
       throw new Error("User must be logged in to create an event");
@@ -123,19 +107,19 @@ export const EventsProvider: React.FC<{ children: React.ReactNode }> = ({
 
     const newEvent = data[0] as SupabaseEventType;
 
-    setAllEventsForCurrentCity((prevEvents) => [...prevEvents, newEvent]);
+    setAllEvents((prevEvents) => [...prevEvents, newEvent]);
 
     return newEvent;
   }
 
   useEffect(() => {
-    fetchAllEventsForUsersCity();
+    fetchAllMiniMeets();
     fetchAllEventCategories();
     fetchAllTopCreators();
   }, []);
 
-  const value: EventsContextType = {
-    allEventsForCurrentCity,
+  const value: EventsAndUserDetailsType = {
+    allEventsForCurrentCity: allEvents,
     getEventById,
     isLoading,
     eventCategories,
@@ -145,12 +129,14 @@ export const EventsProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   return (
-    <EventsContext.Provider value={value}>{children}</EventsContext.Provider>
+    <EventsAndDataContext.Provider value={value}>
+      {children}
+    </EventsAndDataContext.Provider>
   );
 };
 
 export const useEvents = () => {
-  const context = useContext(EventsContext);
+  const context = useContext(EventsAndDataContext);
   if (context === undefined) {
     throw new Error("useEvents must be used within an EventsProvider");
   }
