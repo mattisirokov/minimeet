@@ -28,7 +28,7 @@ const EventCard = ({
   const router = useRouter();
 
   const handlePress = () => {
-    router.push(`/modal/${id.toString()}`);
+    router.push(`/meet/${id.toString()}`);
   };
 
   return (

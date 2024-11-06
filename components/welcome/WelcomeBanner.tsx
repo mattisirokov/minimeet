@@ -1,30 +1,43 @@
 import React from "react";
-import { StyleSheet, Image, TextInput } from "react-native";
+import { StyleSheet, Image, TextInput, Pressable } from "react-native";
 import { View, Text } from "../Themed";
+import { router } from "expo-router";
+
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 import Colors from "@/constants/Colors";
 import FilterCarousel from "../carousels/FilterCarousel";
 
-import { useAuthenticatedUser } from "@/contexts/AuthContext";
+import { useAuth } from "@/contexts/AuthContext";
 import { useEvents } from "@/contexts/EventsContext";
 
 const Header = () => {
-  const { userProfile } = useAuthenticatedUser();
+  const { session, userProfile } = useAuth();
   const { allEventsForCurrentCity } = useEvents();
 
   return (
     <View style={styles.container}>
       <View style={styles.profileContainer}>
-        <Image
-          source={{
-            uri: userProfile.avatar_url,
-          }}
-          style={styles.profileImage}
-        />
-        <Text style={styles.welcomeText}>
-          Welcome {userProfile.first_name || userProfile.email}!
-        </Text>
+        {session && userProfile ? (
+          <>
+            <Image
+              source={{
+                uri: userProfile.avatar_url,
+              }}
+              style={styles.profileImage}
+            />
+            <Text style={styles.welcomeText}>
+              Welcome {userProfile.first_name || userProfile.email}!
+            </Text>
+          </>
+        ) : (
+          <Pressable
+            onPress={() => router.push("/login-modal")}
+            style={styles.loginButton}
+          >
+            <Text style={styles.loginText}>Login</Text>
+          </Pressable>
+        )}
       </View>
 
       <Text style={styles.title}>Find MiniMeets Near You</Text>
@@ -72,6 +85,17 @@ const styles = StyleSheet.create({
   welcomeText: {
     fontSize: 18,
     color: "white",
+    fontWeight: "600",
+  },
+  loginButton: {
+    backgroundColor: "#fff",
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    borderRadius: 20,
+  },
+  loginText: {
+    color: Colors["light"].tint,
+    fontSize: 16,
     fontWeight: "600",
   },
   title: {

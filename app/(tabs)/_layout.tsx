@@ -2,12 +2,14 @@ import React from "react";
 import { Tabs } from "expo-router";
 import { View, StyleSheet } from "react-native";
 
+import { router } from "expo-router";
+
 import { useClientOnlyValue } from "@/components/useClientOnlyValue";
+import { useAuth } from "@/contexts/AuthContext";
 
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import Colors from "@/constants/Colors";
 
-// You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
 function TabBarIcon(props: {
   name: React.ComponentProps<typeof FontAwesome>["name"];
   color: string;
@@ -16,6 +18,8 @@ function TabBarIcon(props: {
 }
 
 export default function TabLayout() {
+  const { session } = useAuth();
+
   return (
     <View style={styles.container}>
       <Tabs
@@ -60,6 +64,14 @@ export default function TabLayout() {
                 <TabBarIcon name="magic" color={Colors["light"].tabBarColor} />
               </View>
             ),
+          }}
+          listeners={{
+            tabPress: (e) => {
+              if (!session) {
+                e.preventDefault();
+                router.push("/login-modal");
+              }
+            },
           }}
         />
         <Tabs.Screen

@@ -103,9 +103,5 @@ type AuthenticatedContextType = Omit<
 
 export const useAuthenticatedUser = () => {
   const context = useAuth();
-  if (!context.session || !context.userProfile) {
-    return context as AuthenticatedContextType;
-  }
-
   return context as AuthenticatedContextType;
 };

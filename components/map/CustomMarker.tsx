@@ -9,7 +9,7 @@ const CustomMarker = ({ event }: { event: SupabaseEventType }) => {
   const router = useRouter();
 
   const handlePress = () => {
-    router.push(`/modal/${event.id}`);
+    router.push(`/meet/${event.id.toString()}`);
   };
 
   return (

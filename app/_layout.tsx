@@ -6,12 +6,10 @@ import "react-native-reanimated";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import * as SplashScreen from "expo-splash-screen";
 
-import { AuthProvider, useAuth } from "@/contexts/AuthContext";
+import { AuthProvider } from "@/contexts/AuthContext";
 import { EventsAndDataProvider } from "@/contexts/EventsContext";
 
 import { useFonts } from "expo-font";
-
-import LoginSignUpForm from "@/components/authentication/LoginSignUpForm";
 
 export { ErrorBoundary } from "expo-router";
 
@@ -38,20 +36,10 @@ export default function RootLayout() {
   return (
     <AuthProvider>
       <EventsAndDataProvider>
-        <RouterComponent />
+        <RootLayoutNav />
       </EventsAndDataProvider>
     </AuthProvider>
   );
-}
-
-function RouterComponent() {
-  const { session, loading } = useAuth();
-
-  if (loading) {
-    return null;
-  }
-
-  return session ? <RootLayoutNav /> : <LoginSignUpForm />;
 }
 
 function RootLayoutNav() {
@@ -59,11 +47,17 @@ function RootLayoutNav() {
     <Stack>
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       <Stack.Screen
-        name="modal/[id]"
+        name="meet/[id]"
         options={{
-          presentation: "modal",
-          headerShown: false,
+          headerShown: true,
+          headerBackVisible: true,
+          headerBackTitle: "Back",
+          headerTitle: "Event",
         }}
+      />
+      <Stack.Screen
+        name="login-modal"
+        options={{ headerShown: false, presentation: "modal" }}
       />
     </Stack>
   );

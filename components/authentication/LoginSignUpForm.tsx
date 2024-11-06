@@ -7,6 +7,7 @@ import { Text } from "@/components/Themed";
 import { Input } from "@rneui/themed";
 
 import Button from "@/components/buttons/Button";
+import { router } from "expo-router";
 
 export default function LoginSignUpForm() {
   const [email, setEmail] = useState("");
@@ -20,7 +21,11 @@ export default function LoginSignUpForm() {
       password: password,
     });
 
-    if (error) Alert.alert(error.message);
+    if (error) {
+      Alert.alert(error.message);
+    } else {
+      router.back();
+    }
     setLoading(false);
   }
 
@@ -65,10 +70,16 @@ export default function LoginSignUpForm() {
         />
       </View>
       <View style={[styles.verticallySpaced, styles.mt20]}>
-        <Button title="Sign in" onPress={() => signInWithEmail()} />
+        <Button
+          title={loading ? "Logging you in..." : "Sign in"}
+          onPress={() => signInWithEmail()}
+        />
       </View>
       {/* <View style={styles.verticallySpaced}>
-        <Button title="Sign up" onPress={() => signUpWithEmail()} />
+        <Button
+          title={loading ? "Loading..." : "Sign up"}
+          onPress={() => signUpWithEmail()}
+        />
       </View> */}
     </View>
   );
