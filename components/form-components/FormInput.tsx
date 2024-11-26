@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, TextInput, StyleSheet } from "react-native";
-import { Control, Controller, FieldValues } from "react-hook-form";
+
+import { Controller } from "react-hook-form";
 
 interface FormInputProps {
   control: any;
@@ -31,8 +32,9 @@ const FormInput: React.FC<FormInputProps> = ({
               style={[styles.input, error && styles.errorInput]}
               onBlur={onBlur}
               onChangeText={onChange}
-              value={value}
               secureTextEntry={secureTextEntry}
+              value={value || ""}
+              defaultValue={""}
             />
             {error && <Text style={styles.errorText}>{error.message}</Text>}
           </>

@@ -57,7 +57,7 @@ export default function TabLayout() {
         <Tabs.Screen
           name="create"
           options={{
-            title: "Create",
+            title: "Create Minimeet",
             headerShown: true,
             tabBarIcon: () => (
               <View style={styles.createIconContainer}>

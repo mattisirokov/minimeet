@@ -9,12 +9,11 @@ import {
 import { useRouter } from "expo-router";
 
 import Carousel from "react-native-reanimated-carousel";
-import FontAwesome from "@expo/vector-icons/FontAwesome";
+import EventCardLargeImage from "../cards/EventCardLargeImage";
 
 // import { events } from "@/placeholder-data/placeholder-events";
 
 import { useEvents } from "@/contexts/EventsContext";
-import EventCard from "../cards/EventCard";
 
 const { width } = Dimensions.get("window");
 
@@ -38,13 +37,12 @@ const EventsNearYou = () => {
         data={allEventsForCurrentCity}
         mode="parallax"
         renderItem={({ item }) => (
-          <EventCard
+          <EventCardLargeImage
             key={item.id}
             title={item.title}
             image={item.image}
             category={item.category}
             city={item.city}
-            icon={item.icon as keyof typeof FontAwesome.glyphMap}
             id={item.id}
           />
         )}

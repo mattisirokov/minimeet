@@ -13,16 +13,14 @@ type EventCardProps = {
   image: string;
   category: string;
   city: string;
-  icon: keyof typeof FontAwesome.glyphMap;
   id: number;
 };
 
-const EventCard = ({
+const EventCardLargeImage = ({
   title,
   image,
   category,
   city,
-  icon,
   id,
 }: EventCardProps) => {
   const router = useRouter();
@@ -34,7 +32,6 @@ const EventCard = ({
   return (
     <TouchableOpacity style={styles.itemWrapper} onPress={handlePress}>
       <View style={styles.lightPill}>
-        <FontAwesome name={icon} size={16} color={"black"} />
         <Text style={styles.lightPillText}>{category}</Text>
       </View>
       <View style={styles.cityPill}>
@@ -54,9 +51,8 @@ const EventCard = ({
 
 const styles = StyleSheet.create({
   itemWrapper: {
-    position: "relative",
     width: "100%",
-    height: "100%",
+    height: 250,
     borderRadius: Colors["light"].borderRadius,
     overflow: "hidden",
   },
@@ -130,4 +126,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default EventCard;
+export default EventCardLargeImage;
