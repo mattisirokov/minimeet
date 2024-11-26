@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import LoginSignUpForm from "@/components/authentication/LoginSignUpForm";
 
 const LoginModal = () => {

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Alert, StyleSheet, View } from "react-native";
+import { router } from "expo-router";
 
 import { supabase } from "@/config/supabase";
 
@@ -7,7 +8,6 @@ import { Text } from "@/components/Themed";
 import { Input } from "@rneui/themed";
 
 import Button from "@/components/buttons/Button";
-import { router } from "expo-router";
 
 export default function LoginSignUpForm() {
   const [email, setEmail] = useState("");

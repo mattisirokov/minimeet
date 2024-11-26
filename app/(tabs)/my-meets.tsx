@@ -1,27 +1,31 @@
-import { View, ScrollView, StyleSheet } from "react-native";
+import { View, StyleSheet, FlatList } from "react-native";
 
 import { useEvents } from "@/contexts/EventsContext";
 
 import EventCardLargeImage from "@/components/cards/EventCardLargeImage";
+import { SupabaseEventType } from "../../types";
 
 export default function MyEventsScreen() {
   const { allEventsForCurrentCity } = useEvents();
 
+  const renderItem = ({ item }: { item: SupabaseEventType }) => (
+    <EventCardLargeImage
+      key={item.id}
+      id={item.id}
+      title={item.title}
+      image={item.image}
+      category={item.category}
+      city={item.city}
+    />
+  );
+
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.eventsContainer}>
-        {allEventsForCurrentCity.map((event) => (
-          <EventCardLargeImage
-            key={event.id}
-            id={event.id}
-            title={event.title}
-            image={event.image}
-            category={event.category}
-            city={event.city}
-          />
-        ))}
-      </View>
-    </ScrollView>
+    <FlatList<SupabaseEventType>
+      data={allEventsForCurrentCity}
+      renderItem={renderItem}
+      contentContainerStyle={styles.container}
+      ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
+    />
   );
 }
 

@@ -15,7 +15,6 @@ export default function ModalScreen() {
   return (
     <View style={styles.container}>
       <SingleEventHeader event={event} />
-      <Text>{id}</Text>
     </View>
   );
 }
