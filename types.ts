@@ -2,6 +2,7 @@ import { Session, User } from "@supabase/supabase-js";
 
 export type EventsAndUserDetailsType = {
   allEventsForCurrentCity: SupabaseEventType[];
+  allEventsForCurrentUser: SupabaseEventType[];
   getEventById: (id: string | string[]) => SupabaseEventType | undefined;
   isLoading: boolean;
   eventCategories: EventCategory[];

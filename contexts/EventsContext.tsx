@@ -12,11 +12,12 @@ import { useAuthenticatedUser } from "@/contexts/AuthContext";
 
 const EventsAndDataContext = createContext<EventsAndUserDetailsType>({
   allEventsForCurrentCity: [],
-  getEventById: () => undefined,
-  isLoading: true,
-  eventCategories: [],
+  allEventsForCurrentUser: [],
   topCreators: [],
+  eventCategories: [],
+  getEventById: () => undefined,
   createNewEvent: async () => {},
+  isLoading: true,
 });
 
 export const EventsAndDataProvider: React.FC<{ children: React.ReactNode }> = ({

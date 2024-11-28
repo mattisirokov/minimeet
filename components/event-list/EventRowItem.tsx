@@ -10,7 +10,7 @@ export default function EventRowItem({ event }: { event: SupabaseEventType }) {
   return (
     <TouchableOpacity
       style={styles.container}
-      onPress={() => router.push(`/modal/${event.id.toString()}`)}
+      onPress={() => router.push(`/meet/${event.id.toString()}`)}
     >
       <View style={styles.imageContainer}>
         <Image source={{ uri: event.image }} style={styles.eventImage} />

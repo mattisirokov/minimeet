@@ -13,7 +13,7 @@ const TopCreators = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Our top meet creators</Text>
-      <Carousel
+      {/* <Carousel
         width={width}
         height={250}
         data={topCreators}
@@ -27,7 +27,7 @@ const TopCreators = () => {
             ))}
           </View>
         )}
-      />
+      /> */}
     </View>
   );
 };

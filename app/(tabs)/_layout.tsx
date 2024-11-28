@@ -14,7 +14,7 @@ function TabBarIcon(props: {
   name: React.ComponentProps<typeof FontAwesome>["name"];
   color: string;
 }) {
-  return <FontAwesome size={30} {...props} />;
+  return <FontAwesome size={28} {...props} />;
 }
 
 export default function TabLayout() {
@@ -30,10 +30,10 @@ export default function TabLayout() {
 
           tabBarItemStyle: {
             height: 60,
-            paddingVertical: 5,
+            paddingVertical: 8,
           },
           tabBarIconStyle: {
-            marginBottom: 3,
+            marginBottom: 0,
           },
           tabBarShowLabel: false,
         }}
@@ -57,8 +57,6 @@ export default function TabLayout() {
         <Tabs.Screen
           name="create"
           options={{
-            title: "Create Minimeet",
-            headerShown: true,
             tabBarIcon: () => (
               <View style={styles.createIconContainer}>
                 <TabBarIcon name="magic" color={Colors["light"].tabBarColor} />
@@ -77,8 +75,6 @@ export default function TabLayout() {
         <Tabs.Screen
           name="my-meets"
           options={{
-            title: "My meets",
-            headerShown: true,
             headerTitle: "My meets",
             tabBarIcon: ({ color }) => (
               <TabBarIcon name="calendar" color={color} />
@@ -89,8 +85,6 @@ export default function TabLayout() {
           name="settings"
           options={{
             title: "Settings",
-            headerTitle: "Settings",
-            headerShown: true,
             tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color} />,
           }}
         />

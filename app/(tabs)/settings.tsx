@@ -3,46 +3,47 @@ import React, { useState } from "react";
 import {
   StyleSheet,
   SafeAreaView,
-  ScrollView,
   View,
-  Text,
+  ScrollView,
   TouchableOpacity,
+  Text,
   Switch,
   Image,
 } from "react-native";
 
-import { router } from "expo-router";
-
 import { useAuth } from "@/contexts/AuthContext";
 
-import FeatherIcon from "react-native-vector-icons/Feather";
+import FeatherIcon from "@expo/vector-icons/Feather";
+
+const tabs = [
+  { name: "Preferences", icon: "settings" },
+  { name: "Help", icon: "help-circle" },
+];
 
 export default function Example() {
+  const [value, setValue] = useState(0);
+
+  const { signOut, userProfile } = useAuth();
+
   const [form, setForm] = useState({
     emailNotifications: true,
     pushNotifications: false,
   });
 
-  const { userProfile, signOut } = useAuth();
-
-  const handleSignOut = async () => {
-    await signOut();
-    router.push("/"); // TODO: Make this smoother --> roll it into a single function...
-  };
-
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#f8f8f8" }}>
-      <ScrollView contentContainerStyle={styles.content}>
-        <View style={[styles.section, { paddingTop: 4 }]}>
-          <Text style={styles.sectionTitle}>Account</Text>
+      {userProfile ? (
+        <View style={styles.container}>
+          <View style={styles.header}>
+            <Text style={styles.headerTitle}>Settings</Text>
 
-          <View style={styles.sectionBody}>
-            <TouchableOpacity
-              onPress={() => {
-                // handle onPress
-              }}
-              style={styles.profile}
-            >
+            <Text style={styles.headerSubtitle}>
+              Manage your account settings and preferences
+            </Text>
+          </View>
+
+          <View style={styles.profile}>
+            <View style={styles.profileHeader}>
               <Image
                 alt=""
                 source={{
@@ -51,251 +52,295 @@ export default function Example() {
                 style={styles.profileAvatar}
               />
 
-              <View style={styles.profileBody}>
+              <View>
                 <Text style={styles.profileName}>
-                  {userProfile?.first_name} {userProfile?.last_name}
+                  {userProfile.first_name} {userProfile.last_name}
                 </Text>
 
-                <Text style={styles.profileHandle}>{userProfile?.email}</Text>
+                <Text style={styles.profileHandle}>{userProfile.email}</Text>
               </View>
+            </View>
 
-              <FeatherIcon color="#bcbcbc" name="chevron-right" size={22} />
+            <TouchableOpacity
+              onPress={() => {
+                // handle onPress
+              }}
+            >
+              <View style={styles.profileAction}>
+                <Text style={styles.profileActionText}>Edit Profile</Text>
+
+                <FeatherIcon color="#fff" name="edit-3" size={16} />
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                signOut();
+              }}
+              style={styles.row}
+            >
+              <Text style={[styles.rowLabel, styles.rowLabelLogout]}>
+                Log Out
+              </Text>
             </TouchableOpacity>
           </View>
-        </View>
 
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Preferences</Text>
+          <View style={styles.tabs}>
+            {tabs.map(({ name, icon }, index) => {
+              const isActive = index === value;
 
-          <View style={styles.sectionBody}>
-            <View style={[styles.rowWrapper, styles.rowFirst]}>
-              <TouchableOpacity
-                onPress={() => {
-                  // handle onPress
-                }}
-                style={styles.row}
-              >
-                <Text style={styles.rowLabel}>Language</Text>
+              return (
+                <View
+                  key={name}
+                  style={[
+                    styles.tabWrapper,
+                    isActive && { borderBottomColor: "#6366f1" },
+                  ]}
+                >
+                  <TouchableOpacity
+                    onPress={() => {
+                      setValue(index);
+                    }}
+                  >
+                    <View style={styles.tab}>
+                      <FeatherIcon
+                        color={isActive ? "#6366f1" : "#6b7280"}
+                        name={icon as keyof typeof FeatherIcon.glyphMap}
+                        size={16}
+                      />
 
-                <View style={styles.rowSpacer} />
+                      <Text
+                        style={[
+                          styles.tabText,
+                          isActive && { color: "#6366f1" },
+                        ]}
+                      >
+                        {name}
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
+                </View>
+              );
+            })}
+          </View>
 
-                <Text style={styles.rowValue}>English</Text>
+          {value === 0 && (
+            <ScrollView>
+              <View style={styles.section}>
+                <View style={styles.sectionBody}>
+                  <View style={[styles.rowWrapper, styles.rowFirst]}>
+                    <TouchableOpacity
+                      onPress={() => {
+                        // handle onPress
+                      }}
+                      style={styles.row}
+                    >
+                      <Text style={styles.rowLabel}>Language</Text>
 
-                <FeatherIcon color="#bcbcbc" name="chevron-right" size={19} />
-              </TouchableOpacity>
-            </View>
+                      <View style={styles.rowSpacer} />
 
-            <View style={styles.rowWrapper}>
-              <TouchableOpacity
-                onPress={() => {
-                  // handle onPress
-                }}
-                style={styles.row}
-              >
-                <Text style={styles.rowLabel}>Location</Text>
+                      <Text style={styles.rowValue}>English</Text>
 
-                <View style={styles.rowSpacer} />
+                      <FeatherIcon
+                        color="#C6C6C6"
+                        name="chevron-right"
+                        size={20}
+                      />
+                    </TouchableOpacity>
+                  </View>
 
-                <Text style={styles.rowValue}>Los Angeles, CA</Text>
+                  <View style={styles.rowWrapper}>
+                    <TouchableOpacity
+                      onPress={() => {
+                        // handle onPress
+                      }}
+                      style={styles.row}
+                    >
+                      <Text style={styles.rowLabel}>Location</Text>
 
-                <FeatherIcon color="#bcbcbc" name="chevron-right" size={19} />
-              </TouchableOpacity>
-            </View>
+                      <View style={styles.rowSpacer} />
 
-            <View style={styles.rowWrapper}>
-              <View style={styles.row}>
-                <Text style={styles.rowLabel}>Email Notifications</Text>
+                      <Text style={styles.rowValue}>Los Angeles, CA</Text>
 
-                <View style={styles.rowSpacer} />
+                      <FeatherIcon
+                        color="#C6C6C6"
+                        name="chevron-right"
+                        size={20}
+                      />
+                    </TouchableOpacity>
+                  </View>
 
-                <Switch
-                  onValueChange={(emailNotifications) =>
-                    setForm({ ...form, emailNotifications })
-                  }
-                  style={{ transform: [{ scaleX: 0.95 }, { scaleY: 0.95 }] }}
-                  value={form.emailNotifications}
-                />
+                  <View style={styles.rowWrapper}>
+                    <View style={styles.row}>
+                      <Text style={styles.rowLabel}>Email Notifications</Text>
+
+                      <View style={styles.rowSpacer} />
+
+                      <Switch
+                        onValueChange={(emailNotifications) =>
+                          setForm({ ...form, emailNotifications })
+                        }
+                        style={{
+                          transform: [{ scaleX: 0.95 }, { scaleY: 0.95 }],
+                        }}
+                        value={form.emailNotifications}
+                      />
+                    </View>
+                  </View>
+
+                  <View style={styles.rowWrapper}>
+                    <View style={styles.row}>
+                      <Text style={styles.rowLabel}>Push Notifications</Text>
+
+                      <View style={styles.rowSpacer} />
+
+                      <Switch
+                        onValueChange={(pushNotifications) =>
+                          setForm({ ...form, pushNotifications })
+                        }
+                        style={{
+                          transform: [{ scaleX: 0.95 }, { scaleY: 0.95 }],
+                        }}
+                        value={form.pushNotifications}
+                      />
+                    </View>
+                  </View>
+                </View>
               </View>
-            </View>
 
-            <View style={[styles.rowWrapper, styles.rowLast]}>
-              <View style={styles.row}>
-                <Text style={styles.rowLabel}>Push Notifications</Text>
+              <View style={styles.section}>
+                <Text style={styles.sectionTitle}>Resources</Text>
 
-                <View style={styles.rowSpacer} />
+                <View style={styles.sectionBody}>
+                  <View style={[styles.rowWrapper, styles.rowFirst]}>
+                    <TouchableOpacity
+                      onPress={() => {
+                        // handle onPress
+                      }}
+                      style={styles.row}
+                    >
+                      <Text style={styles.rowLabel}>Contact Us</Text>
 
-                <Switch
-                  onValueChange={(pushNotifications) =>
-                    setForm({ ...form, pushNotifications })
-                  }
-                  style={{ transform: [{ scaleX: 0.95 }, { scaleY: 0.95 }] }}
-                  value={form.pushNotifications}
-                />
+                      <View style={styles.rowSpacer} />
+
+                      <FeatherIcon
+                        color="#C6C6C6"
+                        name="chevron-right"
+                        size={20}
+                      />
+                    </TouchableOpacity>
+                  </View>
+
+                  <View style={styles.rowWrapper}>
+                    <TouchableOpacity
+                      onPress={() => {
+                        // handle onPress
+                      }}
+                      style={styles.row}
+                    >
+                      <Text style={styles.rowLabel}>Report Bug</Text>
+
+                      <View style={styles.rowSpacer} />
+
+                      <FeatherIcon
+                        color="#C6C6C6"
+                        name="chevron-right"
+                        size={20}
+                      />
+                    </TouchableOpacity>
+                  </View>
+
+                  <View style={styles.rowWrapper}>
+                    <TouchableOpacity
+                      onPress={() => {
+                        // handle onPress
+                      }}
+                      style={styles.row}
+                    >
+                      <Text style={styles.rowLabel}>Rate in App Store</Text>
+
+                      <View style={styles.rowSpacer} />
+
+                      <FeatherIcon
+                        color="#C6C6C6"
+                        name="chevron-right"
+                        size={20}
+                      />
+                    </TouchableOpacity>
+                  </View>
+
+                  <View style={styles.rowWrapper}>
+                    <TouchableOpacity
+                      onPress={() => {
+                        // handle onPress
+                      }}
+                      style={styles.row}
+                    >
+                      <Text style={styles.rowLabel}>Terms and Privacy</Text>
+
+                      <View style={styles.rowSpacer} />
+
+                      <FeatherIcon
+                        color="#C6C6C6"
+                        name="chevron-right"
+                        size={20}
+                      />
+                    </TouchableOpacity>
+                  </View>
+                </View>
               </View>
-            </View>
-          </View>
+              <Text style={styles.contentFooter}>App Version 2.24 #50491</Text>
+            </ScrollView>
+          )}
         </View>
-
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Resources</Text>
-
-          <View style={styles.sectionBody}>
-            <View style={[styles.rowWrapper, styles.rowFirst]}>
-              <TouchableOpacity
-                onPress={() => {
-                  // handle onPress
-                }}
-                style={styles.row}
-              >
-                <Text style={styles.rowLabel}>Contact Us</Text>
-
-                <View style={styles.rowSpacer} />
-
-                <FeatherIcon color="#bcbcbc" name="chevron-right" size={19} />
-              </TouchableOpacity>
-            </View>
-
-            <View style={styles.rowWrapper}>
-              <TouchableOpacity
-                onPress={() => {
-                  // handle onPress
-                }}
-                style={styles.row}
-              >
-                <Text style={styles.rowLabel}>Report Bug</Text>
-
-                <View style={styles.rowSpacer} />
-
-                <FeatherIcon color="#bcbcbc" name="chevron-right" size={19} />
-              </TouchableOpacity>
-            </View>
-
-            <View style={styles.rowWrapper}>
-              <TouchableOpacity
-                onPress={() => {
-                  // handle onPress
-                }}
-                style={styles.row}
-              >
-                <Text style={styles.rowLabel}>Rate in App Store</Text>
-
-                <View style={styles.rowSpacer} />
-
-                <FeatherIcon color="#bcbcbc" name="chevron-right" size={19} />
-              </TouchableOpacity>
-            </View>
-
-            <View style={[styles.rowWrapper, styles.rowLast]}>
-              <TouchableOpacity
-                onPress={() => {
-                  // handle onPress
-                }}
-                style={styles.row}
-              >
-                <Text style={styles.rowLabel}>Terms and Privacy</Text>
-
-                <View style={styles.rowSpacer} />
-
-                <FeatherIcon color="#bcbcbc" name="chevron-right" size={19} />
-              </TouchableOpacity>
-            </View>
-          </View>
+      ) : (
+        <View style={styles.container}>
+          <Text style={styles.headerTitle}>Please log in to view settings</Text>
         </View>
-
-        <View style={styles.section}>
-          <View style={styles.sectionBody}>
-            <View
-              style={[
-                styles.rowWrapper,
-                styles.rowFirst,
-                styles.rowLast,
-                { alignItems: "center" },
-              ]}
-            >
-              <TouchableOpacity
-                onPress={() => {
-                  handleSignOut();
-                }}
-                style={styles.row}
-              >
-                <Text style={[styles.rowLabel, styles.rowLabelLogout]}>
-                  Log Out
-                </Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-
-        <Text style={styles.contentFooter}>App Version 2.24 #50491</Text>
-      </ScrollView>
+      )}
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  /** Header */
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    width: "100%",
-    paddingHorizontal: 16,
-  },
-  headerAction: {
-    width: 40,
-    height: 40,
-    alignItems: "flex-start",
-    justifyContent: "center",
-  },
-  headerTitle: {
-    fontSize: 19,
-    fontWeight: "600",
-    color: "#000",
+  container: {
+    paddingVertical: 24,
+    paddingHorizontal: 0,
     flexGrow: 1,
     flexShrink: 1,
     flexBasis: 0,
-    textAlign: "center",
   },
-  /** Content */
-  content: {
-    paddingHorizontal: 16,
+  tabs: {
+    flexDirection: "row",
+    paddingTop: 16,
+    backgroundColor: "#fff",
   },
-  contentFooter: {
-    marginTop: 24,
-    fontSize: 13,
+  /** Header */
+  header: {
+    paddingHorizontal: 24,
+    marginBottom: 12,
+  },
+  headerTitle: {
+    fontSize: 32,
+    fontWeight: "700",
+    color: "#1d1d1d",
+  },
+  headerSubtitle: {
+    fontSize: 15,
     fontWeight: "500",
-    textAlign: "center",
-    color: "#a69f9f",
-  },
-  /** Section */
-  section: {
-    paddingVertical: 12,
-  },
-  sectionTitle: {
-    margin: 8,
-    marginLeft: 12,
-    fontSize: 13,
-    letterSpacing: 0.33,
-    fontWeight: "500",
-    color: "#a69f9f",
-    textTransform: "uppercase",
-  },
-  sectionBody: {
-    borderRadius: 12,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 1.41,
-    elevation: 2,
+    color: "#929292",
+    marginTop: 6,
   },
   /** Profile */
   profile: {
-    padding: 12,
+    paddingTop: 12,
+    paddingHorizontal: 24,
+    paddingBottom: 24,
     backgroundColor: "#fff",
-    borderRadius: 12,
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+    borderColor: "#e3e3e3",
+  },
+  profileHeader: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "flex-start",
@@ -304,45 +349,99 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     borderRadius: 9999,
+    borderWidth: 1,
+    borderColor: "#ccc",
     marginRight: 12,
   },
-  profileBody: {
-    marginRight: "auto",
-  },
   profileName: {
-    fontSize: 18,
+    fontSize: 17,
     fontWeight: "600",
-    color: "#292929",
+    color: "#3d3d3d",
   },
   profileHandle: {
-    marginTop: 2,
-    fontSize: 16,
-    fontWeight: "400",
-    color: "#858585",
+    marginTop: 4,
+    fontSize: 15,
+    color: "#989898",
+  },
+  profileAction: {
+    marginTop: 16,
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#000",
+    borderRadius: 12,
+  },
+
+  profileActionText: {
+    marginRight: 8,
+    fontSize: 15,
+    fontWeight: "600",
+    color: "#fff",
+  },
+  /** Tab */
+  tab: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    position: "relative",
+    overflow: "hidden",
+    paddingVertical: 10,
+  },
+  tabWrapper: {
+    flexGrow: 1,
+    flexShrink: 1,
+    flexBasis: 0,
+    borderColor: "#e5e7eb",
+    borderBottomWidth: 2,
+  },
+  tabText: {
+    fontSize: 13,
+    fontWeight: "600",
+    color: "#6b7280",
+    marginLeft: 5,
+  },
+  /** Section */
+  section: {
+    marginTop: 12,
+  },
+  sectionBody: {
+    backgroundColor: "#fff",
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+    borderColor: "#e3e3e3",
+    paddingLeft: 24,
+  },
+  sectionTitle: {
+    marginTop: 0,
+    marginHorizontal: 24,
+    marginBottom: 8,
+    fontSize: 14,
+    fontWeight: "600",
+    color: "#a7a7a7",
+    textTransform: "uppercase",
+    letterSpacing: 1.2,
   },
   /** Row */
   row: {
-    height: 44,
-    width: "100%",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "flex-start",
-    paddingRight: 12,
+    height: 44,
+    paddingRight: 24,
   },
   rowWrapper: {
-    paddingLeft: 16,
-    backgroundColor: "#fff",
     borderTopWidth: 1,
-    borderColor: "#f0f0f0",
+    borderColor: "#e3e3e3",
   },
   rowFirst: {
-    borderTopLeftRadius: 12,
-    borderTopRightRadius: 12,
+    borderTopWidth: 0,
   },
   rowLabel: {
-    fontSize: 16,
-    letterSpacing: 0.24,
-    color: "#000",
+    fontSize: 17,
+    fontWeight: "500",
+    color: "#2c2c2c",
   },
   rowSpacer: {
     flexGrow: 1,
@@ -350,19 +449,25 @@ const styles = StyleSheet.create({
     flexBasis: 0,
   },
   rowValue: {
-    fontSize: 16,
+    fontSize: 17,
     fontWeight: "500",
-    color: "#ababab",
+    color: "#7f7f7f",
     marginRight: 4,
   },
-  rowLast: {
-    borderBottomLeftRadius: 12,
-    borderBottomRightRadius: 12,
-  },
+
   rowLabelLogout: {
     width: "100%",
     textAlign: "center",
     fontWeight: "600",
     color: "#dc2626",
+    marginTop: 10,
+  },
+
+  contentFooter: {
+    marginTop: 24,
+    fontSize: 13,
+    fontWeight: "500",
+    textAlign: "center",
+    color: "#a69f9f",
   },
 });

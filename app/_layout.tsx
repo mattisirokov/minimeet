@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 
 import { Stack } from "expo-router";
 
-import "react-native-reanimated";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import * as SplashScreen from "expo-splash-screen";
 
@@ -49,10 +48,7 @@ function RootLayoutNav() {
       <Stack.Screen
         name="meet/[id]"
         options={{
-          headerShown: true,
-          headerBackVisible: true,
-          headerBackTitle: "Back",
-          headerTitle: "Event",
+          headerShown: false,
         }}
       />
       <Stack.Screen

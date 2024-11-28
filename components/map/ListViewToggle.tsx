@@ -50,6 +50,8 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderRadius: 15,
     padding: 5,
+    borderWidth: 1,
+    borderColor: "#e0e0e0",
   },
   toggleButton: {
     paddingVertical: 10,
