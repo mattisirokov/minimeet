@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import { LinearGradient as ExpoGradient } from "expo-linear-gradient";
 import { SocialDiagram } from "./SocialDialogue";
+import Button from "../buttons/Button";
 
 export default function CreateEventStarterScreen({
   onStartClick,
@@ -32,15 +33,7 @@ export default function CreateEventStarterScreen({
           </View>
 
           <View style={styles.diagramFooter}>
-            <TouchableOpacity
-              onPress={() => {
-                onStartClick();
-              }}
-            >
-              <View style={styles.btn}>
-                <Text style={styles.btnText}>Get Started</Text>
-              </View>
-            </TouchableOpacity>
+            <Button title="Get Started" onPress={onStartClick} />
           </View>
         </View>
       </SafeAreaView>

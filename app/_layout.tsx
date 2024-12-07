@@ -1,27 +1,27 @@
-import React, { useEffect } from "react";
+import React, { useEffect } from 'react';
 
-import { Stack } from "expo-router";
+import { Stack } from 'expo-router';
 
-import FontAwesome from "@expo/vector-icons/FontAwesome";
-import * as SplashScreen from "expo-splash-screen";
+import FontAwesome from '@expo/vector-icons/FontAwesome';
+import * as SplashScreen from 'expo-splash-screen';
 
-import { AuthProvider } from "@/contexts/AuthContext";
-import { EventsAndDataProvider } from "@/contexts/EventsContext";
+import { AuthProvider } from '@/contexts/AuthContext';
+import { EventsAndDataProvider } from '@/contexts/EventsContext';
 
-import { useFonts } from "expo-font";
+import { useFonts } from 'expo-font';
 
-export { ErrorBoundary } from "expo-router";
+export { ErrorBoundary } from 'expo-router';
 
 export const unstable_settings = {
   // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: "(tabs)",
+  initialRouteName: '(tabs)',
 };
 
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
-    SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
+    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
     ...FontAwesome.font,
   });
 
@@ -53,7 +53,7 @@ function RootLayoutNav() {
       />
       <Stack.Screen
         name="login-modal"
-        options={{ headerShown: false, presentation: "modal" }}
+        options={{ headerShown: false, presentation: 'modal' }}
       />
     </Stack>
   );
