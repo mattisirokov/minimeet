@@ -3,7 +3,7 @@ import React, { createContext, useState, useContext, useEffect } from "react";
 import { Session } from "@supabase/supabase-js";
 import { supabase } from "@/config/supabase";
 
-import { AuthContextType, UserProfile } from "@/types";
+import { AuthContextType, LoadingStatus, UserProfile } from "@/types";
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -16,9 +16,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const [loading, setLoading] = useState(true);
 
-  const [status, setStatus] = useState<"fetching" | "complete" | "error">(
-    "fetching"
-  );
+  const [status, setStatus] = useState<LoadingStatus>("fetching");
 
   const fetchUserData = async (userId: string) => {
     const { data, error } = await supabase
