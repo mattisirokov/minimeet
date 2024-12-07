@@ -3,21 +3,26 @@ import { createContext, useContext, useState, useEffect } from "react";
 import { supabase } from "@/config/supabase";
 
 import {
-  EventsAndUserDetailsType,
+  EventsContextType,
   UserProfile,
   SupabaseEventType,
+  EventsLoadingState,
 } from "@/types";
 
 import { useAuthenticatedUser } from "@/contexts/AuthContext";
 
-const EventsAndDataContext = createContext<EventsAndUserDetailsType>({
+const EventsAndDataContext = createContext<EventsContextType>({
   allEventsForCurrentCity: [],
   allEventsForCurrentUser: [],
   topCreators: [],
   eventCategories: [],
   getEventById: () => undefined,
   createNewEvent: async () => {},
-  isLoading: true,
+  status: {
+    events: "fetching",
+    categories: "fetching",
+    creators: "fetching",
+  },
 });
 
 export const EventsAndDataProvider: React.FC<{ children: React.ReactNode }> = ({
@@ -29,46 +34,57 @@ export const EventsAndDataProvider: React.FC<{ children: React.ReactNode }> = ({
   const [eventCategories, setEventCategories] = useState<any[]>([]);
   const [topCreators, setTopCreators] = useState<UserProfile[]>([]);
 
-  const [isLoading, setIsLoading] = useState(true);
+  const [loadingState, setLoadingState] = useState<EventsLoadingState>({
+    events: "fetching",
+    categories: "fetching",
+    creators: "fetching",
+  });
 
   // Get all the events for the users current city
 
   async function fetchAllMiniMeets() {
-    setIsLoading(true);
+    setLoadingState((prev) => ({ ...prev, events: "fetching" }));
     const { data, error } = await supabase.from("Events").select("*");
 
     if (error) {
+      setLoadingState((prev) => ({ ...prev, events: "error" }));
       console.error("Error fetching data:", error);
       return;
     }
     setAllEvents(data as SupabaseEventType[]);
-    setIsLoading(false);
+    setLoadingState((prev) => ({ ...prev, events: "complete" }));
   }
 
   // Fetch all the event categories
   async function fetchAllEventCategories() {
+    setLoadingState((prev) => ({ ...prev, categories: "fetching" }));
     const { data, error } = await supabase.from("Categories").select("*");
 
     if (error) {
+      setLoadingState((prev) => ({ ...prev, categories: "error" }));
       console.error("Error fetching data:", error);
       return;
     }
     setEventCategories(data);
+    setLoadingState((prev) => ({ ...prev, categories: "complete" }));
   }
 
   // Fetch all the top creators
   async function fetchAllTopCreators() {
+    setLoadingState((prev) => ({ ...prev, creators: "fetching" }));
     const { data, error } = await supabase
       .from("Users")
       .select("*")
       .eq("top_creator", true);
 
     if (error) {
+      setLoadingState((prev) => ({ ...prev, creators: "error" }));
       console.error("Error fetching data:", error);
       return;
     }
 
     setTopCreators(data);
+    setLoadingState((prev) => ({ ...prev, creators: "complete" }));
   }
 
   // Get a single event by id
@@ -119,14 +135,16 @@ export const EventsAndDataProvider: React.FC<{ children: React.ReactNode }> = ({
     fetchAllTopCreators();
   }, []);
 
-  const value: EventsAndUserDetailsType = {
+  const value: EventsContextType = {
     allEventsForCurrentCity: allEvents,
-    getEventById,
-    isLoading,
+    allEventsForCurrentUser: [],
+    status: loadingState,
     eventCategories,
     topCreators,
-    // @ts-ignore
-    createNewEvent,
+    getEventById,
+    createNewEvent: async (event: SupabaseEventType) => {
+      await createNewEvent(event);
+    },
   };
 
   return (

@@ -16,6 +16,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const [loading, setLoading] = useState(true);
 
+  const [status, setStatus] = useState<"fetching" | "complete" | "error">(
+    "fetching"
+  );
+
   const fetchUserData = async (userId: string) => {
     const { data, error } = await supabase
       .from("Users")
@@ -33,15 +37,23 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
   useEffect(() => {
     const fetchSessionAndUser = async () => {
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
-      setSession(session);
-      if (session?.user) {
-        const userData = await fetchUserData(session.user.id);
-        setUserProfile({ ...session.user, ...userData });
+      setStatus("fetching");
+      try {
+        const {
+          data: { session },
+        } = await supabase.auth.getSession();
+        setSession(session);
+        if (session?.user) {
+          const userData = await fetchUserData(session.user.id);
+          setUserProfile({ ...session.user, ...userData });
+        }
+        setStatus("complete");
+      } catch (error) {
+        setStatus("error");
+        console.error("Error fetching session:", error);
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     };
 
     fetchSessionAndUser();
@@ -49,12 +61,20 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange(async (_event, session) => {
-      setSession(session);
-      if (session?.user) {
-        const userData = await fetchUserData(session.user.id);
-        setUserProfile({ ...session.user, ...userData });
+      setStatus("fetching");
+      try {
+        setSession(session);
+        if (session?.user) {
+          const userData = await fetchUserData(session.user.id);
+          setUserProfile({ ...session.user, ...userData });
+        }
+        setStatus("complete");
+      } catch (error) {
+        setStatus("error");
+        console.error("Error during auth state change:", error);
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     });
 
     return () => subscription.unsubscribe();
@@ -79,6 +99,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     signIn,
     signOut,
     loading,
+    status,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

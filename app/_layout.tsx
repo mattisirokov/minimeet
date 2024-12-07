@@ -1,44 +1,85 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react";
 
-import { Stack } from 'expo-router';
+import { Stack } from "expo-router";
 
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import * as SplashScreen from 'expo-splash-screen';
+import FontAwesome from "@expo/vector-icons/FontAwesome";
+import * as SplashScreen from "expo-splash-screen";
 
-import { AuthProvider } from '@/contexts/AuthContext';
-import { EventsAndDataProvider } from '@/contexts/EventsContext';
+import { AuthProvider } from "@/contexts/AuthContext";
+import { EventsAndDataProvider } from "@/contexts/EventsContext";
 
-import { useFonts } from 'expo-font';
+import { useAuth } from "@/contexts/AuthContext";
+import { useEvents } from "@/contexts/EventsContext";
 
-export { ErrorBoundary } from 'expo-router';
+import { useFonts } from "expo-font";
+
+export { ErrorBoundary } from "expo-router";
 
 export const unstable_settings = {
   // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: '(tabs)',
+  initialRouteName: "(tabs)",
 };
 
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+    SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
     ...FontAwesome.font,
   });
 
   useEffect(() => {
     if (error) throw error;
-    if (loaded) SplashScreen.hideAsync();
-  }, [error, loaded]);
+  }, [error]);
 
   if (!loaded) return null;
 
   return (
     <AuthProvider>
       <EventsAndDataProvider>
-        <RootLayoutNav />
+        <RootLayoutWithData />
       </EventsAndDataProvider>
     </AuthProvider>
   );
+}
+
+function RootLayoutWithData() {
+  const { status: authLoadingStatus } = useAuth();
+  const { status: eventsLoadingStatus } = useEvents();
+
+  useEffect(() => {
+    async function hideSplashScreen() {
+      try {
+        const isAuthLoadingComplete = authLoadingStatus !== "fetching";
+        const isEventsLoadingComplete = Object.values(
+          eventsLoadingStatus
+        ).every((status) => status !== "fetching");
+
+        const isError =
+          authLoadingStatus === "error" ||
+          Object.values(eventsLoadingStatus).some(
+            (status) => status === "error"
+          );
+
+        if (isError) {
+          console.error("Error loading initial data");
+          await SplashScreen.hideAsync();
+          return;
+        }
+
+        if (isAuthLoadingComplete && isEventsLoadingComplete) {
+          await SplashScreen.hideAsync();
+        }
+      } catch (error) {
+        console.error("Error hiding splash screen:", error);
+        await SplashScreen.hideAsync();
+      }
+    }
+
+    hideSplashScreen();
+  }, [authLoadingStatus, eventsLoadingStatus]);
+
+  return <RootLayoutNav />;
 }
 
 function RootLayoutNav() {
@@ -53,7 +94,7 @@ function RootLayoutNav() {
       />
       <Stack.Screen
         name="login-modal"
-        options={{ headerShown: false, presentation: 'modal' }}
+        options={{ headerShown: false, presentation: "modal" }}
       />
     </Stack>
   );

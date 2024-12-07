@@ -1,13 +1,21 @@
 import { Session, User } from "@supabase/supabase-js";
 
-export type EventsAndUserDetailsType = {
+export type LoadingStatus = "fetching" | "complete" | "error";
+
+export type EventsLoadingState = {
+  events: LoadingStatus;
+  categories: LoadingStatus;
+  creators: LoadingStatus;
+};
+
+export type EventsContextType = {
   allEventsForCurrentCity: SupabaseEventType[];
   allEventsForCurrentUser: SupabaseEventType[];
-  getEventById: (id: string | string[]) => SupabaseEventType | undefined;
-  isLoading: boolean;
   eventCategories: EventCategory[];
   topCreators: UserProfile[];
+  getEventById: (id: string | string[]) => SupabaseEventType | undefined;
   createNewEvent: (event: SupabaseEventType) => Promise<void>;
+  status: EventsLoadingState;
 };
 
 export type AuthContextType = {
@@ -16,6 +24,7 @@ export type AuthContextType = {
   signIn: (email: string, password: string) => Promise<void>;
   signOut: () => Promise<void>;
   loading: boolean;
+  status: LoadingStatus;
 };
 
 export type SupabaseEventType = {
