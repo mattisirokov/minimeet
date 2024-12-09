@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
-import MapView, { Marker } from "react-native-maps";
+import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 
 import { getGeolocation } from "@/services/geolocationService";
 import { lightBlueMapStyle } from "@/config/mapStyles";
@@ -38,6 +38,8 @@ export default function Map({ events }: MapProps) {
       style={styles.map}
       initialRegion={INITIAL_POSITION}
       customMapStyle={lightBlueMapStyle}
+      showsUserLocation
+      showsMyLocationButton
     >
       {coordinates.map((event: EventWithCoordinates) => (
         <Marker key={event.id} coordinate={event.coordinates}>
