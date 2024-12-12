@@ -7,6 +7,7 @@ import {
   UserProfile,
   SupabaseEventType,
   EventsLoadingState,
+  SupabaseCategoryType,
 } from "@/types";
 
 import { useAuthenticatedUser } from "@/contexts/AuthContext";
@@ -31,7 +32,9 @@ export const EventsAndDataProvider: React.FC<{ children: React.ReactNode }> = ({
   const { userProfile } = useAuthenticatedUser();
 
   const [allEvents, setAllEvents] = useState<SupabaseEventType[]>([]);
-  const [eventCategories, setEventCategories] = useState<any[]>([]);
+  const [allEventCategories, setAllEventCategories] = useState<
+    SupabaseCategoryType[]
+  >([]);
   const [topCreators, setTopCreators] = useState<UserProfile[]>([]);
 
   const [loadingState, setLoadingState] = useState<EventsLoadingState>({
@@ -43,34 +46,43 @@ export const EventsAndDataProvider: React.FC<{ children: React.ReactNode }> = ({
   // Get all the events for the users current city
 
   async function fetchAllMiniMeets() {
+    console.log("Fetching all MiniMeets...");
     setLoadingState((prev) => ({ ...prev, events: "fetching" }));
     const { data, error } = await supabase.from("Events").select("*");
 
     if (error) {
       setLoadingState((prev) => ({ ...prev, events: "error" }));
-      console.error("Error fetching data:", error);
+      console.error("Error fetching MiniMeets:", error);
       return;
     }
     setAllEvents(data as SupabaseEventType[]);
     setLoadingState((prev) => ({ ...prev, events: "complete" }));
+    console.log("Successfully fetched MiniMeets:", data.length, "events found");
   }
 
   // Fetch all the event categories
   async function fetchAllEventCategories() {
+    console.log("Fetching event categories...");
     setLoadingState((prev) => ({ ...prev, categories: "fetching" }));
     const { data, error } = await supabase.from("Categories").select("*");
 
     if (error) {
       setLoadingState((prev) => ({ ...prev, categories: "error" }));
-      console.error("Error fetching data:", error);
+      console.error("Error fetching categories:", error);
       return;
     }
-    setEventCategories(data);
+    setAllEventCategories(data);
     setLoadingState((prev) => ({ ...prev, categories: "complete" }));
+    console.log(
+      "Successfully fetched categories:",
+      data.length,
+      "categories found"
+    );
   }
 
   // Fetch all the top creators
   async function fetchAllTopCreators() {
+    console.log("Fetching top creators...");
     setLoadingState((prev) => ({ ...prev, creators: "fetching" }));
     const { data, error } = await supabase
       .from("Users")
@@ -79,12 +91,17 @@ export const EventsAndDataProvider: React.FC<{ children: React.ReactNode }> = ({
 
     if (error) {
       setLoadingState((prev) => ({ ...prev, creators: "error" }));
-      console.error("Error fetching data:", error);
+      console.error("Error fetching top creators:", error);
       return;
     }
 
     setTopCreators(data);
     setLoadingState((prev) => ({ ...prev, creators: "complete" }));
+    console.log(
+      "Successfully fetched top creators:",
+      data.length,
+      "creators found"
+    );
   }
 
   // Get a single event by id
@@ -102,9 +119,11 @@ export const EventsAndDataProvider: React.FC<{ children: React.ReactNode }> = ({
       "id" | "created_at" | "updated_at" | "host_id"
     >
   ) {
+    console.log("Creating new event...");
     const currentUserId = userProfile.user_id;
 
     if (!currentUserId) {
+      console.error("Error: User must be logged in to create an event");
       throw new Error("User must be logged in to create an event");
     }
 
@@ -119,12 +138,14 @@ export const EventsAndDataProvider: React.FC<{ children: React.ReactNode }> = ({
     }
 
     if (!data || data.length === 0) {
+      console.error("Error: No data returned from insert operation");
       throw new Error("No data returned from insert operation");
     }
 
     const newEvent = data[0] as SupabaseEventType;
 
     setAllEvents((prevEvents) => [...prevEvents, newEvent]);
+    console.log("Successfully created new event:", newEvent.title);
 
     return newEvent;
   }
@@ -139,7 +160,7 @@ export const EventsAndDataProvider: React.FC<{ children: React.ReactNode }> = ({
     allEventsForCurrentCity: allEvents,
     allEventsForCurrentUser: [],
     status: loadingState,
-    eventCategories,
+    eventCategories: allEventCategories,
     topCreators,
     getEventById,
     createNewEvent: async (event: SupabaseEventType) => {

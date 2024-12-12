@@ -1,82 +1,130 @@
-import { View, Text, Image, StyleSheet } from "react-native";
-
-import Colors from "@/constants/Colors";
-
+import { TouchableOpacity, View, Image, Text, StyleSheet } from "react-native";
 import { UserProfile } from "@/types";
 
-const CreatorCard = ({ creator }: { creator: UserProfile }) => {
-  return (
-    <View style={styles.card}>
-      <Image source={{ uri: creator.avatar_url }} style={styles.eventImage} />
-
-      <View style={styles.detailsContainer}>
-        <Text style={styles.eventDate}>{creator.first_name}</Text>
-        <Text style={styles.eventTitle}>{creator.first_name}</Text>
-        <View style={styles.locationContainer}>
-          <Text style={styles.eventLocation}>
-            {creator.top_creator ? "Top creator" : "Creator"}
-          </Text>
-        </View>
-      </View>
-    </View>
-  );
+type CreatorProps = {
+  user: UserProfile;
 };
 
+export default function CreatorCard({ user }: CreatorProps) {
+  return (
+    <TouchableOpacity
+      key={user.id}
+      onPress={() => {
+        // handle onPress
+      }}
+    >
+      <View style={styles.card}>
+        <View style={styles.cardTop}>
+          <Image
+            alt=""
+            resizeMode="cover"
+            source={{ uri: user.avatar_url }}
+            style={styles.cardImg}
+          />
+
+          <View style={styles.cardTopPills}>
+            <View style={[styles.cardTopPill, { paddingLeft: 6 }]}>
+              <Image
+                alt=""
+                source={{ uri: user.avatar_url }}
+                style={styles.cardTopPillImg}
+              />
+
+              <Text style={styles.cardTopPillText}>{user.first_name}</Text>
+            </View>
+
+            <View style={styles.cardTopPill}>
+              <Text style={styles.cardTopPillText}>{user.last_name}</Text>
+            </View>
+          </View>
+        </View>
+
+        <View style={styles.cardBody}>
+          <View style={styles.cardHeader}>
+            <Text style={styles.cardTitle}>{user.first_name}</Text>
+
+            <Text style={styles.cardDuration}>{user.last_name}</Text>
+          </View>
+
+          <Text style={styles.cardDescription}>{user.last_name}</Text>
+        </View>
+      </View>
+    </TouchableOpacity>
+  );
+}
+
 const styles = StyleSheet.create({
+  /** Card */
   card: {
-    width: 180,
-    borderRadius: 15,
+    padding: 12,
+    borderRadius: 24,
+    marginBottom: 24,
     backgroundColor: "#fff",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 5,
-    elevation: 5,
   },
-  eventImage: {
+  cardTop: {
+    position: "relative",
+    borderRadius: 24,
+  },
+  cardImg: {
     width: "100%",
-    height: 100,
-    borderTopLeftRadius: 15,
-    borderTopRightRadius: 15,
+    height: 180,
+    borderRadius: 24,
   },
-  detailsContainer: {
-    padding: 10,
-  },
-  eventDate: {
-    fontSize: 12,
-    color: "#999",
-    marginBottom: 5,
-  },
-  eventTitle: {
-    fontSize: 16,
-    fontWeight: "bold",
-    marginBottom: 5,
-  },
-  locationContainer: {
+  cardTopPills: {
+    position: "absolute",
+    right: 0,
+    left: 0,
+    bottom: 0,
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 10,
-  },
-  eventLocation: {
-    fontSize: 14,
-    color: "#888",
-  },
-  iconContainer: {
-    flexDirection: "row",
     justifyContent: "space-between",
-    marginBottom: 10,
+    padding: 12,
   },
-  badgeContainer: {
-    backgroundColor: Colors["light"].tint,
-    borderRadius: 15,
-    paddingVertical: 5,
-    paddingHorizontal: 10,
-    alignSelf: "flex-start",
+  cardTopPill: {
+    height: 36,
+    paddingHorizontal: 14,
+    backgroundColor: "#fff",
+    borderRadius: 24,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
   },
-  badgeText: {
-    fontSize: 12,
-    color: "#fff",
+  cardTopPillImg: {
+    width: 24,
+    height: 24,
+    borderRadius: 9999,
+    marginRight: 8,
+  },
+  cardTopPillText: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: "#222",
+  },
+  cardBody: {
+    paddingVertical: 16,
+    paddingHorizontal: 12,
+  },
+  cardHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: 12,
+  },
+  cardTitle: {
+    fontSize: 19,
+    fontWeight: "700",
+    color: "#222",
+  },
+  cardDuration: {
+    fontSize: 16,
+    fontWeight: "700",
+    color: "#6a6bff",
+  },
+  cardDescription: {
+    fontSize: 15,
+    letterSpacing: 0.25,
+    lineHeight: 22,
+    fontWeight: "500",
+    color: "#545454",
   },
 });
-
-export default CreatorCard;

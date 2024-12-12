@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 import BottomSheet, {
@@ -38,8 +38,7 @@ export default function BottomDrawer({ children }: BottomDrawerProps) {
         enablePanDownToClose={false}
       >
         <BottomSheetView style={styles.contentContainer}>
-          {/* {children} */}
-          <Text>Hello</Text>
+          {children}
         </BottomSheetView>
       </BottomSheet>
     </GestureHandlerRootView>
@@ -52,5 +51,6 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     flex: 1,
+    overflow: "hidden",
   },
 });

@@ -1,7 +1,13 @@
-import React from "react";
-import { StyleSheet, Image, TextInput, Pressable } from "react-native";
-import { View, Text } from "../Themed";
-import { router } from "expo-router";
+import {
+  StyleSheet,
+  Image,
+  TextInput,
+  Pressable,
+  View,
+  Text,
+} from "react-native";
+
+import { Link, router } from "expo-router";
 
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 
@@ -11,7 +17,7 @@ import FilterCarousel from "../carousels/FilterCarousel";
 import { useAuth } from "@/contexts/AuthContext";
 import { useEvents } from "@/contexts/EventsContext";
 
-const Header = () => {
+export default function WelcomeBanner() {
   const { session, userProfile } = useAuth();
   const { allEventsForCurrentCity } = useEvents();
 
@@ -26,9 +32,9 @@ const Header = () => {
               }}
               style={styles.profileImage}
             />
-            <Text style={styles.welcomeText}>
+            <Link href="/settings" style={styles.welcomeText}>
               Welcome {userProfile.first_name || userProfile.email}!
-            </Text>
+            </Link>
           </>
         ) : (
           <Pressable
@@ -57,7 +63,7 @@ const Header = () => {
       <FilterCarousel />
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -122,5 +128,3 @@ const styles = StyleSheet.create({
     color: "#000",
   },
 });
-
-export default Header;

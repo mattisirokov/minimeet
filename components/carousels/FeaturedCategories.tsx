@@ -8,20 +8,20 @@ import { useEvents } from "@/contexts/EventsContext";
 
 import Colors from "@/constants/Colors";
 
-const FeaturedCategories = () => {
+export default function FeaturedCategories() {
   const { eventCategories } = useEvents();
 
   return (
     <View style={styles.componentWrapper}>
       <Text style={styles.header}>Featured Categories</Text>
       <View style={styles.categoriesContainer}>
-        {eventCategories.slice(0, 4).map((category, index) => (
+        {eventCategories.map((category, index) => (
           <CategoryCard key={index} category={category} />
         ))}
       </View>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   componentWrapper: {
@@ -43,5 +43,3 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
   },
 });
-
-export default FeaturedCategories;

@@ -1,9 +1,9 @@
-import { EventCategory } from "@/types";
+import { SupabaseCategoryType } from "@/types";
 
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 export const getCategoryIcon = (
-  category: EventCategory
+  category: SupabaseCategoryType
 ): keyof typeof FontAwesome.glyphMap => {
   switch (category.title) {
     case "Music":

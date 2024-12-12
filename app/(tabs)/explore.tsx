@@ -3,7 +3,7 @@ import { View, StyleSheet } from "react-native";
 import { useEvents } from "@/contexts/EventsContext";
 
 import Map from "@/components/map/Map";
-import BottomDrawer from "@/components/bottom-sheet/BottomDrawer";
+import BottomSheet from "@/components/bottom-sheet/BottomSheet";
 import BottomSheetContent from "@/components/bottom-sheet/BottomSheetContent";
 
 export default function ExploreScreen() {
@@ -17,9 +17,9 @@ export default function ExploreScreen() {
         <Map events={allEventsForCurrentCity} />
       </View>
       <View style={styles.bottomSheetContainer}>
-        <BottomDrawer>
-          <BottomSheetContent events={allEventsForCurrentCity} />
-        </BottomDrawer>
+        <BottomSheet>
+          <BottomSheetContent />
+        </BottomSheet>
       </View>
     </View>
   );

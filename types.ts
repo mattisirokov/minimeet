@@ -11,7 +11,7 @@ export type EventsLoadingState = {
 export type EventsContextType = {
   allEventsForCurrentCity: SupabaseEventType[];
   allEventsForCurrentUser: SupabaseEventType[];
-  eventCategories: EventCategory[];
+  eventCategories: SupabaseCategoryType[];
   topCreators: UserProfile[];
   getEventById: (id: string | string[]) => SupabaseEventType | undefined;
   createNewEvent: (event: SupabaseEventType) => Promise<void>;
@@ -49,7 +49,9 @@ export interface EventWithCoordinates extends SupabaseEventType {
   };
 }
 
-export type EventCategory = {
+export type SupabaseCategoryType = {
+  id: number;
+  created_at: string;
   title: string;
   image: string;
 };

@@ -6,9 +6,9 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import Colors from "@/constants/Colors";
 import { getCategoryIcon } from "@/services/categoryIconHelper";
 
-import { EventCategory } from "@/types";
+import { SupabaseCategoryType } from "@/types";
 
-const CategoryCard = ({ category }: { category: EventCategory }) => {
+const CategoryCard = ({ category }: { category: SupabaseCategoryType }) => {
   return (
     <View style={styles.container}>
       <Image source={{ uri: category.image }} style={styles.backgroundImage} />

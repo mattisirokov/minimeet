@@ -1,6 +1,7 @@
 import {
   StyleSheet,
   Dimensions,
+  SafeAreaView,
   View,
   Text,
   TouchableOpacity,
@@ -8,7 +9,7 @@ import {
   Image,
 } from "react-native";
 
-import FeatherIcon from "@expo/vector-icons/Feather";
+import FeatherIcon from "react-native-vector-icons/Feather";
 
 const songs = [
   [
@@ -102,18 +103,15 @@ const songs_3 = [
 ];
 const CARD_WIDTH = Math.min(Dimensions.get("screen").width * 0.75, 400);
 
-export default function Example() {
+export default function PopularEvents() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Minimeets near you</Text>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
+      <View style={styles.container}>
+        <Text style={styles.title}>Popular Events</Text>
 
-      <ScrollView
-        style={styles.mainScroll}
-        showsVerticalScrollIndicator={false}
-      >
         <View style={styles.list}>
           <View style={styles.listHeader}>
-            <Text style={styles.listTitle}>Quick picks</Text>
+            <Text style={styles.listTitle}>Sports</Text>
 
             <TouchableOpacity
               onPress={() => {
@@ -290,25 +288,25 @@ export default function Example() {
             })}
           </ScrollView>
         </View>
-      </ScrollView>
-    </View>
+      </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-  },
-  mainScroll: {
-    flex: 1,
+    paddingVertical: 24,
+    paddingHorizontal: 0,
+    flexGrow: 1,
+    flexShrink: 1,
+    flexBasis: 0,
   },
   title: {
     paddingHorizontal: 24,
-    fontSize: 24,
+    fontSize: 32,
     fontWeight: "700",
     color: "#1d1d1d",
-    marginTop: 10,
-    marginBottom: 20,
+    marginBottom: 12,
   },
   /** List */
   list: {

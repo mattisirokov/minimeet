@@ -1,34 +1,51 @@
-import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { FontAwesome } from "@expo/vector-icons";
+import { SupabaseCategoryType } from "@/types";
 
-import Colors from "@/constants/Colors";
-import FontAwesome from "@expo/vector-icons/FontAwesome";
-
-type FilterItemProps = {
-  icon: keyof typeof FontAwesome.glyphMap;
-  name: string;
+const categoryToIcon: { [key: string]: string } = {
+  Music: "music",
+  Sports: "futbol-o",
+  Food: "cutlery",
+  Arts: "paint-brush",
+  Technology: "laptop",
+  Education: "graduation-cap",
+  Networking: "users",
+  Entertainment: "star",
+  default: "calendar",
 };
 
-export default function FilterItem({ icon, name }: FilterItemProps) {
+type FilterItemProps = {
+  eventCategory: SupabaseCategoryType;
+  onPress?: () => void;
+};
+
+export default function FilterItem({
+  eventCategory,
+  onPress,
+}: FilterItemProps) {
+  const iconName =
+    categoryToIcon[eventCategory.title] || categoryToIcon.default;
+
   return (
-    <TouchableOpacity style={styles.wrapper}>
+    <TouchableOpacity style={styles.wrapper} onPress={onPress}>
       <View style={styles.iconContainer}>
-        <FontAwesome name={icon} size={24} color={Colors["light"].text} />
+        <FontAwesome name={iconName as any} size={24} color="#000" />
       </View>
-      <Text style={styles.text}>{name}</Text>
+      <Text style={styles.text} numberOfLines={2}>
+        {eventCategory.title}
+      </Text>
     </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
   wrapper: {
-    display: "flex",
-    justifyContent: "center",
+    flex: 1,
     alignItems: "center",
   },
   iconContainer: {
     backgroundColor: "white",
-    opacity: 0.5,
+    opacity: 0.8,
     borderRadius: 25,
     width: 50,
     height: 50,
@@ -39,6 +56,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: "bold",
     color: "#fff",
-    marginTop: 5,
+    marginTop: 3,
+    textAlign: "center",
   },
 });

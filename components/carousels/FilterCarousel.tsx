@@ -1,13 +1,15 @@
 import { View, StyleSheet } from "react-native";
+import { useEvents } from "@/contexts/EventsContext";
 
-import { filterItems } from "@/placeholder-data/placeholder-filters";
 import FilterItem from "../FilterItem";
 
 export default function FilterCarousel() {
+  const { eventCategories } = useEvents();
+
   return (
     <View style={styles.filterContainer}>
-      {filterItems.map((item) => (
-        <FilterItem key={item.name} icon={item.icon} name={item.name} />
+      {eventCategories.map((eventCategory) => (
+        <FilterItem key={eventCategory.id} eventCategory={eventCategory} />
       ))}
     </View>
   );
@@ -21,6 +23,5 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "flex-start",
-    borderColor: "red",
   },
 });

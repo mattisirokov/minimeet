@@ -19,6 +19,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const [status, setStatus] = useState<LoadingStatus>("fetching");
 
   const fetchUserData = async (userId: string) => {
+    console.log(`Fetching user data for userId: ${userId}...`);
     const { data, error } = await supabase
       .from("Users")
       .select("*")
@@ -30,11 +31,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       return null;
     }
 
+    console.log("Successfully fetched user data");
     return data;
   };
 
   useEffect(() => {
     const fetchSessionAndUser = async () => {
+      console.log("Fetching session and user data...");
       setStatus("fetching");
       try {
         const {
@@ -46,6 +49,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
           setUserProfile({ ...session.user, ...userData });
         }
         setStatus("complete");
+        console.log("Successfully fetched session and user data");
       } catch (error) {
         setStatus("error");
         console.error("Error fetching session:", error);
@@ -59,6 +63,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange(async (_event, session) => {
+      console.log("Auth state changed, updating session and user data...");
       setStatus("fetching");
       try {
         setSession(session);
@@ -67,6 +72,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
           setUserProfile({ ...session.user, ...userData });
         }
         setStatus("complete");
+        console.log(
+          "Successfully updated session and user data after auth change"
+        );
       } catch (error) {
         setStatus("error");
         console.error("Error during auth state change:", error);
@@ -79,16 +87,26 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   }, []);
 
   const signIn = async (email: string, password: string) => {
+    console.log("Attempting to sign in...");
     const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
-    if (error) throw error;
+    if (error) {
+      console.error("Sign in failed:", error);
+      throw error;
+    }
+    console.log("Successfully signed in");
   };
 
   const signOut = async () => {
+    console.log("Attempting to sign out...");
     const { error } = await supabase.auth.signOut();
-    if (error) throw error;
+    if (error) {
+      console.error("Sign out failed:", error);
+      throw error;
+    }
+    console.log("Successfully signed out");
   };
 
   const value: AuthContextType = {
