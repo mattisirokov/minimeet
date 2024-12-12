@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   list: {
-    marginBottom: 24,
+    marginBottom: 6,
   },
   listHeader: {
     flexDirection: "row",

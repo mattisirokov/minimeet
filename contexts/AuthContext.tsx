@@ -11,11 +11,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [session, setSession] = useState<Session | null>(null);
-
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
-
   const [loading, setLoading] = useState(true);
-
   const [status, setStatus] = useState<LoadingStatus>("fetching");
 
   const fetchUserData = async (userId: string) => {

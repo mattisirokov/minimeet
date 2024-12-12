@@ -36,7 +36,6 @@ export const EventsAndDataProvider: React.FC<{ children: React.ReactNode }> = ({
     SupabaseCategoryType[]
   >([]);
   const [topCreators, setTopCreators] = useState<UserProfile[]>([]);
-
   const [loadingState, setLoadingState] = useState<EventsLoadingState>({
     events: "fetching",
     categories: "fetching",

@@ -1,18 +1,9 @@
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
-import { SupabaseCategoryType } from "@/types";
 
-const categoryToIcon: { [key: string]: string } = {
-  Music: "music",
-  Sports: "futbol-o",
-  Food: "cutlery",
-  Arts: "paint-brush",
-  Technology: "laptop",
-  Education: "graduation-cap",
-  Networking: "users",
-  Entertainment: "star",
-  default: "calendar",
-};
+import { getCategoryIcon } from "@/services/categoryIconHelper";
+
+import { SupabaseCategoryType } from "@/types";
 
 type FilterItemProps = {
   eventCategory: SupabaseCategoryType;
@@ -23,8 +14,7 @@ export default function FilterItem({
   eventCategory,
   onPress,
 }: FilterItemProps) {
-  const iconName =
-    categoryToIcon[eventCategory.title] || categoryToIcon.default;
+  const iconName = getCategoryIcon(eventCategory);
 
   return (
     <TouchableOpacity style={styles.wrapper} onPress={onPress}>

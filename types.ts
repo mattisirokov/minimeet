@@ -1,12 +1,6 @@
 import { Session, User } from "@supabase/supabase-js";
 
-export type LoadingStatus = "fetching" | "complete" | "error";
-
-export type EventsLoadingState = {
-  events: LoadingStatus;
-  categories: LoadingStatus;
-  creators: LoadingStatus;
-};
+// Types for the 2 different contexts that we have in our app
 
 export type EventsContextType = {
   allEventsForCurrentCity: SupabaseEventType[];
@@ -27,10 +21,21 @@ export type AuthContextType = {
   status: LoadingStatus;
 };
 
+export type LoadingStatus = "fetching" | "complete" | "error";
+
+export type EventsLoadingState = {
+  events: LoadingStatus;
+  categories: LoadingStatus;
+  creators: LoadingStatus;
+};
+
+// Types for the Supabase tables
+
 export type SupabaseEventType = {
   id: number;
   created_at: string;
   title: string;
+  description: string;
   image: string;
   city: string;
   street_address: string;
@@ -40,6 +45,7 @@ export type SupabaseEventType = {
   time_of_event: string;
   host_id: string;
   category: string;
+  ticket_price: number;
 };
 
 export interface EventWithCoordinates extends SupabaseEventType {
@@ -56,6 +62,7 @@ export type SupabaseCategoryType = {
   image: string;
 };
 
+// Types for the User Profile, also coming from Supabase
 export interface UserProfile extends User {
   user_id?: string;
   first_name?: string;

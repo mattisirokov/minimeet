@@ -26,7 +26,11 @@ export default function SmallEventCard({
           />
 
           <View style={styles.cardBody}>
-            <Text style={styles.cardTitle}>
+            <Text
+              style={styles.cardTitle}
+              numberOfLines={3}
+              ellipsizeMode="tail"
+            >
               {event.title || "Sample Event"}
             </Text>
             <Text style={styles.cardSubtitle}>
@@ -45,6 +49,7 @@ export default function SmallEventCard({
 
 const styles = StyleSheet.create({
   card: {
+    height: 95,
     width: 300,
     flexDirection: "row",
     alignItems: "center",
