@@ -3,7 +3,7 @@ import { router } from "expo-router";
 
 import { SupabaseEventType } from "@/types";
 
-export default function EventCard({ event }: { event: SupabaseEventType }) {
+export default function WideEventCard({ event }: { event: SupabaseEventType }) {
   return (
     <TouchableOpacity
       key={event.id}

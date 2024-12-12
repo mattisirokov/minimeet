@@ -11,8 +11,8 @@ export default function Example() {
     <SafeAreaView style={{ backgroundColor: "#f3e4f1" }}>
       <ScrollView contentContainerStyle={styles.container}>
         <Text style={styles.title}>Top Creators</Text>
-        {topCreators.map((creator) => (
-          <CreatorCard user={creator} />
+        {topCreators.map((creator, index) => (
+          <CreatorCard user={creator} key={index} />
         ))}
       </ScrollView>
     </SafeAreaView>

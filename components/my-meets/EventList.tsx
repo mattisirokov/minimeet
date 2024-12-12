@@ -1,6 +1,6 @@
 import { StyleSheet, ScrollView, Text } from "react-native";
 
-import EventCard from "../cards/EventCard";
+import WideEventCard from "../cards/WideEventCard";
 import { SupabaseEventType } from "@/types";
 
 type EventAtteningProps = {
@@ -13,7 +13,7 @@ export default function EventsAttending({ events }: EventAtteningProps) {
   return (
     <ScrollView contentContainerStyle={styles.content}>
       {events.map((event, index) => {
-        return <EventCard event={event} key={index} />;
+        return <WideEventCard event={event} key={index} />;
       })}
     </ScrollView>
   );

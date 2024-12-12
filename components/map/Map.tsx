@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
-import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
+import MapView, { Marker } from "react-native-maps";
 
 import { getGeolocation } from "@/services/geolocationService";
 import { lightBlueMapStyle } from "@/config/mapStyles";
