@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 import {
   StyleSheet,
@@ -30,6 +30,10 @@ export default function Example() {
     pushNotifications: false,
   });
 
+  if (!userProfile) {
+    return null; // TODO: add an empty state
+  }
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#f8f8f8" }}>
       {userProfile ? (
@@ -47,7 +51,7 @@ export default function Example() {
               <Image
                 alt=""
                 source={{
-                  uri: "https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2.5&w=256&h=256&q=80",
+                  uri: userProfile.avatar_url,
                 }}
                 style={styles.profileAvatar}
               />

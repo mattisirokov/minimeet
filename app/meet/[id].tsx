@@ -18,7 +18,7 @@ import CreatorOverview from "@/components/single-event/CreatorOverview";
 
 const tabItems = [{ name: "Overview" }, { name: "About creator" }];
 
-export default function Example() {
+export default function MinimeetPage() {
   const { getEventById } = useEvents();
   const { id } = useLocalSearchParams();
 

@@ -1,9 +1,11 @@
 import { View, Text, ScrollView, StyleSheet, Image } from "react-native";
-import { SupabaseEventType } from "@/types";
-import { FontAwesome } from "@expo/vector-icons";
+
 import FeatherIcon from "@expo/vector-icons/Feather";
-import React from "react";
+import { FontAwesome } from "@expo/vector-icons";
+
 import { formatDescription, formatDate, formatTime } from "@/config/helpers";
+
+import { SupabaseEventType } from "@/types";
 
 export default function EventOverview({ event }: { event: SupabaseEventType }) {
   const formattedDescription = formatDescription(event.description);
@@ -27,7 +29,6 @@ export default function EventOverview({ event }: { event: SupabaseEventType }) {
         <View style={styles.headerRow}>
           <View style={styles.headerLocation}>
             <FeatherIcon color="#7B7C7E" name="map-pin" size={14} />
-
             <Text style={styles.headerLocationText}>
               {event.city}, {event.street_address}
             </Text>

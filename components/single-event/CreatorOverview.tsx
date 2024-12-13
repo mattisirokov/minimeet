@@ -1,21 +1,40 @@
+import { useState, useEffect } from "react";
+
 import {
   StyleSheet,
   StatusBar,
   SafeAreaView,
   View,
   Text,
-  TouchableOpacity,
   Image,
 } from "react-native";
 
-const tags = ["ios", "android", "web", "ui", "ux"];
+import { useAuth } from "@/contexts/AuthContext";
+
+import { UserProfile } from "@/types";
 
 type CreatorOverviewProps = {
   creatorID: string;
 };
 
-export default function Example({ creatorID }: CreatorOverviewProps) {
-  // function to get the user profile based on the userID
+export default function CreatorOverview({ creatorID }: CreatorOverviewProps) {
+  const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
+
+  const { getSingleUserProfile } = useAuth();
+
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      const profile = await getSingleUserProfile(creatorID);
+      setUserProfile(profile);
+    };
+
+    fetchUserProfile();
+  }, []);
+
+  if (!userProfile) {
+    return null; // TODO: add an empty state
+  }
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
@@ -26,7 +45,7 @@ export default function Example({ creatorID }: CreatorOverviewProps) {
               <Image
                 alt=""
                 source={{
-                  uri: "https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2.5&w=256&h=256&q=80",
+                  uri: userProfile.avatar_url,
                 }}
                 style={styles.avatarImg}
               />
@@ -35,10 +54,11 @@ export default function Example({ creatorID }: CreatorOverviewProps) {
             </View>
 
             <View style={styles.profileBody}>
-              <Text style={styles.profileTitle}>{"Matti\nSirokov"}</Text>
-
+              <Text style={styles.profileTitle}>
+                {userProfile.first_name} {userProfile.last_name}
+              </Text>
               <Text style={styles.profileSubtitle}>
-                UI/UX Designer
+                Instagram influencer
                 {" · "}
                 <Text style={{ color: "#266EF1" }}>Time Studio</Text>
               </Text>
@@ -49,19 +69,6 @@ export default function Example({ creatorID }: CreatorOverviewProps) {
             Skilled in user research, wireframing, prototyping, and
             collaborating with cross-functional teams.
           </Text>
-
-          <View style={styles.profileTags}>
-            {tags.map((tag, index) => (
-              <TouchableOpacity
-                key={index}
-                onPress={() => {
-                  // handle onPress
-                }}
-              >
-                <Text style={styles.profileTagsItem}>#{tag}</Text>
-              </TouchableOpacity>
-            ))}
-          </View>
         </View>
       </View>
     </SafeAreaView>

@@ -15,6 +15,7 @@ export type EventsContextType = {
 export type AuthContextType = {
   session: Session | null;
   userProfile: UserProfile | null;
+  getSingleUserProfile: (userId: string) => Promise<UserProfile | null>;
   signIn: (email: string, password: string) => Promise<void>;
   signOut: () => Promise<void>;
   loading: boolean;

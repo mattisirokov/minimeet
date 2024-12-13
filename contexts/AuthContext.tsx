@@ -83,6 +83,21 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     return () => subscription.unsubscribe();
   }, []);
 
+  const getSingleUserProfile = async (userId: string) => {
+    const { data, error } = await supabase
+      .from("Users")
+      .select("*")
+      .eq("user_id", userId)
+      .single();
+
+    if (error) {
+      console.error("Error fetching user profile:", error);
+      return null;
+    }
+
+    return data;
+  };
+
   const signIn = async (email: string, password: string) => {
     console.log("Attempting to sign in...");
     const { error } = await supabase.auth.signInWithPassword({
@@ -109,6 +124,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const value: AuthContextType = {
     session,
     userProfile,
+    getSingleUserProfile,
     signIn,
     signOut,
     loading,
