@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
   pointer: {
     width: 10,
     height: 10,
-    backgroundColor: Colors.light.tint,
+    backgroundColor: Colors.tint,
     borderRadius: 10,
     transform: [{ rotate: "45deg" }],
     marginTop: -5,

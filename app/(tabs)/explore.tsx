@@ -16,11 +16,11 @@ export default function ExploreScreen() {
       <View style={styles.mapContainer}>
         <Map events={allEventsForCurrentCity} />
       </View>
-      <View style={styles.bottomSheetContainer}>
+      {/* <View style={styles.bottomSheetContainer}>
         <BottomSheet>
           <BottomSheetContent />
         </BottomSheet>
-      </View>
+      </View> */}
     </View>
   );
 }

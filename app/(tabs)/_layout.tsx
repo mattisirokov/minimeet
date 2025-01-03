@@ -24,8 +24,8 @@ export default function TabLayout() {
     <View style={styles.container}>
       <Tabs
         screenOptions={{
-          tabBarActiveTintColor: Colors["light"].tabIconSelected,
-          tabBarInactiveTintColor: Colors["light"].tabIconDefault,
+          tabBarActiveTintColor: Colors.tabIconSelected,
+          tabBarInactiveTintColor: Colors.tabIconDefault,
           headerShown: useClientOnlyValue(false, false),
 
           tabBarItemStyle: {
@@ -59,7 +59,7 @@ export default function TabLayout() {
           options={{
             tabBarIcon: () => (
               <View style={styles.createIconContainer}>
-                <TabBarIcon name="magic" color={Colors["light"].tabBarColor} />
+                <TabBarIcon name="magic" color={Colors.background} />
               </View>
             ),
           }}
@@ -96,7 +96,7 @@ export default function TabLayout() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors["light"].background,
+    backgroundColor: Colors.background,
   },
   shadow: {
     shadowColor: "#000",
@@ -108,8 +108,8 @@ const styles = StyleSheet.create({
     shadowRadius: 3.5,
   },
   createIconContainer: {
-    backgroundColor: Colors["light"].tabIconSelected,
-    borderRadius: Colors["light"].borderRadius,
+    backgroundColor: Colors.tint,
+    borderRadius: Colors.borderRadius,
     width: 50,
     height: 50,
     alignItems: "center",

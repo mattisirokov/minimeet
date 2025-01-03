@@ -1,15 +1,14 @@
-import { ScrollView } from "react-native";
+import { useAuth } from "@/contexts/AuthContext";
 
-import WelcomeBanner from "@/components/welcome/WelcomeBanner";
+import HomeScreenLayout from "@/components/welcome/HomeScreenLayout";
 import PopularEvents from "@/components/carousels/PopularEvents";
-import TopCreators from "@/components/carousels/TopCreators";
 
-export default function TabOneScreen() {
+export default function HomeScreen() {
+  const { userProfile } = useAuth();
+
   return (
-    <ScrollView>
-      <WelcomeBanner />
+    <HomeScreenLayout userProfile={userProfile}>
       <PopularEvents />
-      <TopCreators />
-    </ScrollView>
+    </HomeScreenLayout>
   );
 }

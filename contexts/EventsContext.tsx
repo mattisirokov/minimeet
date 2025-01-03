@@ -4,7 +4,6 @@ import { supabase } from "@/config/supabase";
 
 import {
   EventsContextType,
-  UserProfile,
   SupabaseEventType,
   EventsLoadingState,
   SupabaseCategoryType,
@@ -15,7 +14,6 @@ import { useAuthenticatedUser } from "@/contexts/AuthContext";
 const EventsAndDataContext = createContext<EventsContextType>({
   allEventsForCurrentCity: [],
   allEventsForCurrentUser: [],
-  topCreators: [],
   eventCategories: [],
   getEventById: () => undefined,
   createNewEvent: async () => {},
@@ -35,7 +33,6 @@ export const EventsAndDataProvider: React.FC<{ children: React.ReactNode }> = ({
   const [allEventCategories, setAllEventCategories] = useState<
     SupabaseCategoryType[]
   >([]);
-  const [topCreators, setTopCreators] = useState<UserProfile[]>([]);
   const [loadingState, setLoadingState] = useState<EventsLoadingState>({
     events: "fetching",
     categories: "fetching",
@@ -76,30 +73,6 @@ export const EventsAndDataProvider: React.FC<{ children: React.ReactNode }> = ({
       "Successfully fetched categories:",
       data.length,
       "categories found"
-    );
-  }
-
-  // Fetch all the top creators
-  async function fetchAllTopCreators() {
-    console.log("Fetching top creators...");
-    setLoadingState((prev) => ({ ...prev, creators: "fetching" }));
-    const { data, error } = await supabase
-      .from("Users")
-      .select("*")
-      .eq("top_creator", true);
-
-    if (error) {
-      setLoadingState((prev) => ({ ...prev, creators: "error" }));
-      console.error("Error fetching top creators:", error);
-      return;
-    }
-
-    setTopCreators(data);
-    setLoadingState((prev) => ({ ...prev, creators: "complete" }));
-    console.log(
-      "Successfully fetched top creators:",
-      data.length,
-      "creators found"
     );
   }
 
@@ -150,9 +123,11 @@ export const EventsAndDataProvider: React.FC<{ children: React.ReactNode }> = ({
   }
 
   useEffect(() => {
-    fetchAllMiniMeets();
-    fetchAllEventCategories();
-    fetchAllTopCreators();
+    async function initializeData() {
+      await Promise.all([fetchAllMiniMeets(), fetchAllEventCategories()]);
+    }
+
+    initializeData();
   }, []);
 
   const value: EventsContextType = {
@@ -160,7 +135,6 @@ export const EventsAndDataProvider: React.FC<{ children: React.ReactNode }> = ({
     allEventsForCurrentUser: [],
     status: loadingState,
     eventCategories: allEventCategories,
-    topCreators,
     getEventById,
     createNewEvent: async (event: SupabaseEventType) => {
       await createNewEvent(event);

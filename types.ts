@@ -6,7 +6,6 @@ export type EventsContextType = {
   allEventsForCurrentCity: SupabaseEventType[];
   allEventsForCurrentUser: SupabaseEventType[];
   eventCategories: SupabaseCategoryType[];
-  topCreators: UserProfile[];
   getEventById: (id: string | string[]) => SupabaseEventType | undefined;
   createNewEvent: (event: SupabaseEventType) => Promise<void>;
   status: EventsLoadingState;

@@ -45,21 +45,12 @@ export default function RootLayout() {
 
 function RootLayoutWithData() {
   const { status: authLoadingStatus } = useAuth();
-  const { status: eventsLoadingStatus } = useEvents();
 
   useEffect(() => {
     async function hideSplashScreen() {
       try {
         const isAuthLoadingComplete = authLoadingStatus !== "fetching";
-        const isEventsLoadingComplete = Object.values(
-          eventsLoadingStatus
-        ).every((status) => status !== "fetching");
-
-        const isError =
-          authLoadingStatus === "error" ||
-          Object.values(eventsLoadingStatus).some(
-            (status) => status === "error"
-          );
+        const isError = authLoadingStatus === "error";
 
         if (isError) {
           console.error("Error loading initial data");
@@ -67,7 +58,7 @@ function RootLayoutWithData() {
           return;
         }
 
-        if (isAuthLoadingComplete && isEventsLoadingComplete) {
+        if (isAuthLoadingComplete) {
           await SplashScreen.hideAsync();
         }
       } catch (error) {
@@ -77,7 +68,7 @@ function RootLayoutWithData() {
     }
 
     hideSplashScreen();
-  }, [authLoadingStatus, eventsLoadingStatus]);
+  }, [authLoadingStatus]);
 
   return <RootLayoutNav />;
 }

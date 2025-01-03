@@ -3,36 +3,25 @@ import {
   SafeAreaView,
   View,
   Text,
-  TouchableOpacity,
   ScrollView,
+  Dimensions,
 } from "react-native";
 
-import { useRouter } from "expo-router";
-
-import SmallEventCard from "../cards/SmallEventCard";
+import HomeEventCard from "../cards/HomeEventCard";
 
 import { useEvents } from "@/contexts/EventsContext";
 
 export default function PopularEvents() {
   const { allEventsForCurrentCity } = useEvents();
-  const router = useRouter();
+
+  const screenWidth = Dimensions.get("window").width;
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
+    <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
-        <Text style={styles.title}>Popular Events</Text>
-
         <View style={styles.list}>
           <View style={styles.listHeader}>
             <Text style={styles.listTitle}>Beauty & Fashion</Text>
-
-            <TouchableOpacity
-              onPress={() => {
-                router.push("/explore");
-              }}
-            >
-              <Text style={styles.listAction}>View All</Text>
-            </TouchableOpacity>
           </View>
 
           <ScrollView
@@ -43,7 +32,18 @@ export default function PopularEvents() {
             {allEventsForCurrentCity
               .filter((event) => event.category === "Beauty")
               .map((event, index) => {
-                return <SmallEventCard event={event} key={index} />;
+                return (
+                  <View
+                    key={index}
+                    style={{
+                      width: screenWidth * 0.75,
+                      marginRight: 12,
+                      overflow: "hidden",
+                    }}
+                  >
+                    <HomeEventCard event={event} />;
+                  </View>
+                );
               })}
           </ScrollView>
         </View>
@@ -51,13 +51,6 @@ export default function PopularEvents() {
         <View style={styles.list}>
           <View style={styles.listHeader}>
             <Text style={styles.listTitle}>Sports</Text>
-            <TouchableOpacity
-              onPress={() => {
-                router.push("/explore");
-              }}
-            >
-              <Text style={styles.listAction}>View All</Text>
-            </TouchableOpacity>
           </View>
 
           <ScrollView
@@ -68,7 +61,18 @@ export default function PopularEvents() {
             {allEventsForCurrentCity
               .filter((event) => event.category === "Sports")
               .map((event, index) => {
-                return <SmallEventCard event={event} key={index} />;
+                return (
+                  <View
+                    key={index}
+                    style={{
+                      width: screenWidth * 0.75,
+                      marginRight: 12,
+                      overflow: "hidden",
+                    }}
+                  >
+                    <HomeEventCard event={event} />;
+                  </View>
+                );
               })}
           </ScrollView>
         </View>
@@ -76,14 +80,6 @@ export default function PopularEvents() {
         <View style={styles.list}>
           <View style={styles.listHeader}>
             <Text style={styles.listTitle}>Tech & Gadgets</Text>
-
-            <TouchableOpacity
-              onPress={() => {
-                router.push("/explore");
-              }}
-            >
-              <Text style={styles.listAction}>View All</Text>
-            </TouchableOpacity>
           </View>
 
           <ScrollView
@@ -94,7 +90,18 @@ export default function PopularEvents() {
             {allEventsForCurrentCity
               .filter((event) => event.category === "Tech")
               .map((event, index) => {
-                return <SmallEventCard event={event} key={index} />;
+                return (
+                  <View
+                    key={index}
+                    style={{
+                      width: screenWidth * 0.75,
+                      marginRight: 12,
+                      overflow: "hidden",
+                    }}
+                  >
+                    <HomeEventCard event={event} />;
+                  </View>
+                );
               })}
           </ScrollView>
         </View>
@@ -125,7 +132,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingHorizontal: 24,
   },
   listTitle: {
     fontWeight: "600",
@@ -144,7 +150,6 @@ const styles = StyleSheet.create({
   },
   listContent: {
     paddingTop: 12,
-    paddingHorizontal: 18,
     paddingBottom: 0,
   },
 });
